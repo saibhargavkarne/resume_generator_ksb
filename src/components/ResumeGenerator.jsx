@@ -38,7 +38,7 @@ export default function ResumeGenerator() {
   const [rawJson, setRawJson] = useState('')
   const [jobDescription, setJobDescription] = useState('')
   const [selectedProfileId, setSelectedProfileId] = useState(DEFAULT_PROFILE_ID)
-  const [useOriginalCompany, setUseOriginalCompany] = useState(false)
+  const [useOriginalCompany, setUseOriginalCompany] = useState(true)
   const [parseError, setParseError] = useState('')
   const [jobDescriptionError, setJobDescriptionError] = useState('')
   const [parsedData, setParsedData] = useState(null)
@@ -261,7 +261,7 @@ export default function ResumeGenerator() {
           {showOriginalCompanyToggle && (
             <div className="mt-4 flex items-start justify-between gap-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-4">
               <div>
-                <p className="text-sm font-medium text-slate-200">Use original recent company</p>
+                <p className="text-sm font-medium text-slate-200">Use original recent company and address</p>
                 <p className="mt-1 text-xs leading-5 text-slate-500">
                   When enabled: company is set to <span className="text-slate-300 font-medium">{ORIGINAL_COMPANY_NAME}</span>, resume location is set to <span className="text-slate-300 font-medium">Dallas, TX</span>, and the address shown on the right reflects Dallas, TX regardless of JD city.
                 </p>
