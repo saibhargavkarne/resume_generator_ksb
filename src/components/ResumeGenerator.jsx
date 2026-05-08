@@ -484,7 +484,7 @@ export default function ResumeGenerator() {
             </div>
           )}
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-3 gap-3">
             <button
               onClick={handleDownload}
               disabled={!canDownload}
@@ -495,7 +495,7 @@ export default function ResumeGenerator() {
               }`}
             >
               <Download className="h-4 w-4" />
-              Download DOCX
+              DOCX
             </button>
 
             <button
@@ -508,22 +508,22 @@ export default function ResumeGenerator() {
               }`}
             >
               <Download className="h-4 w-4" />
-              Download PDF File
+              PDF File
+            </button>
+
+            <button
+              onClick={handleDownloadCoverLetter}
+              disabled={!canDownloadCoverLetter}
+              className={`flex w-full items-center justify-center gap-2 rounded-2xl py-3 font-medium transition-colors ${
+                canDownloadCoverLetter
+                  ? 'bg-violet-700 text-white hover:bg-violet-600'
+                  : 'cursor-not-allowed bg-slate-800 text-slate-500'
+              }`}
+            >
+              <FileText className="h-4 w-4" />
+              Cover Letter
             </button>
           </div>
-
-          <button
-            onClick={handleDownloadCoverLetter}
-            disabled={!canDownloadCoverLetter}
-            className={`flex w-full items-center justify-center gap-2 rounded-2xl py-3 font-medium transition-colors ${
-              canDownloadCoverLetter
-                ? 'bg-violet-700 text-white hover:bg-violet-600'
-                : 'cursor-not-allowed bg-slate-800 text-slate-500'
-            }`}
-          >
-            <FileText className="h-4 w-4" />
-            Download Cover Letter
-          </button>
 
           <button
             onClick={handleSaveToTracker}
