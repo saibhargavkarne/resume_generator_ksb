@@ -342,6 +342,25 @@ Include **100% of JD tools**. JD tools listed **first** within each category.
 
 ---
 
+## 📝 COVER LETTER (Generate for Every Output)
+
+Include a `coverLetter` array in the JSON — 4 paragraph strings, tailored to the JD.
+
+**Structure:**
+1. **Opening** (2–3 sentences): Lead with a direct statement about the role. Name the company and exact job title. ❌ Never open with "I am writing to apply…" or "I am excited to…"
+2. **Experience** (3–4 sentences): Highlight 2–3 of the most relevant achievements from the resume that directly address the JD's primary requirements. Use real metrics from the hardcoded profile.
+3. **Value** (3–4 sentences): Articulate how Saibhargav's Power Platform / D365 expertise translates to concrete business impact in this specific role.
+4. **Closing** (2 sentences): Express readiness to discuss. End professionally.
+
+**Rules:**
+- 250–350 words total
+- Use `**bold**` for the company name and job title in paragraph 1
+- Use only real metrics from the hardcoded profile
+- ❌ No filler: "team player", "passionate about", "I believe", "results-driven"
+- Tone: confident, specific, experienced Power Platform professional — same voice as the resume
+
+---
+
 ## 🚨 FINAL VALIDATION (MANDATORY)
 
 | Check | Pass? |
@@ -434,3 +453,4 @@ Return ONLY this JSON — no explanation, no preamble:
 **`contactLocation`**: Use the JD's city if specified, otherwise `"Dallas, TX"`.
 **`fileName`**: PascalCase — e.g., `Karne_Saibhargav_Walmart_PowerPlatformDeveloper`
 **All `company`, `position`, `location`, `dates` values are hardcoded above — copy them exactly.**
+**`coverLetter`**: 4-element array of paragraph strings — always include, never omit.

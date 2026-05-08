@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
-import { AlertCircle, CheckCircle, ChevronDown, ChevronRight, Download, RotateCcw, Save } from 'lucide-react'
+import { AlertCircle, CheckCircle, ChevronDown, ChevronRight, Download, FileText, RotateCcw, Save } from 'lucide-react'
 import { DEFAULT_PROFILE_ID, getProfileById, RESUME_PROFILES } from '../data/profiles'
+import { getAddressForCity } from '../data/stateAddresses'
 
 const ORIGINAL_COMPANY_NAME = 'Kraft Heinz'
 const ORIGINAL_COMPANY_PROFILE_ID = 'data-engineer-4yr'
@@ -57,6 +58,7 @@ export default function ResumeGenerator() {
   const hasParsedData = Boolean(effectiveParsedData)
   const hasJobDescription = Boolean(jobDescription.trim())
   const canDownload = hasParsedData
+  const canDownloadCoverLetter = hasParsedData && Boolean(effectiveParsedData?.coverLetter)
   const canSave = hasParsedData && hasJobDescription && saveStatus !== 'saving' && saveStatus !== 'saved'
 
   const loadDocxService = async () => {
@@ -156,6 +158,20 @@ export default function ResumeGenerator() {
     }
   }
 
+  const handleDownloadCoverLetter = async () => {
+    const paragraphs = effectiveParsedData?.coverLetter
+    if (!paragraphs) return
+    setDownloadError('')
+
+    try {
+      const docxService = await loadDocxService()
+      await docxService.generateCoverLetterPdf(buildResumeData(), paragraphs, effectiveParsedData.resumeMeta.fileName)
+    } catch (err) {
+      console.error(err)
+      setDownloadError('Failed to generate cover letter PDF. Please try again.')
+    }
+  }
+
   const handleSaveToTracker = async () => {
     if (!hasParsedData) return
 
@@ -205,7 +221,8 @@ export default function ResumeGenerator() {
   }
 
   const fileName = effectiveParsedData?.resumeMeta?.fileName || 'Resume details will appear here after parsing.'
-  const location = effectiveParsedData?.contactLocation || 'Dallas, TX'
+  const rawLocation = effectiveParsedData?.contactLocation || 'Dallas, TX'
+  const location = getAddressForCity(rawLocation) || rawLocation
   const { company, role } = hasParsedData
     ? parseFileName(effectiveParsedData.resumeMeta.fileName)
     : { company: '', role: '' }
@@ -494,6 +511,19 @@ export default function ResumeGenerator() {
               Download PDF File
             </button>
           </div>
+
+          <button
+            onClick={handleDownloadCoverLetter}
+            disabled={!canDownloadCoverLetter}
+            className={`flex w-full items-center justify-center gap-2 rounded-2xl py-3 font-medium transition-colors ${
+              canDownloadCoverLetter
+                ? 'bg-violet-700 text-white hover:bg-violet-600'
+                : 'cursor-not-allowed bg-slate-800 text-slate-500'
+            }`}
+          >
+            <FileText className="h-4 w-4" />
+            Download Cover Letter
+          </button>
 
           <button
             onClick={handleSaveToTracker}

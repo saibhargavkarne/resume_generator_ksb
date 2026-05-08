@@ -625,6 +625,100 @@ const docxService = {
     }
 
     doc.save(`${fileNameBase}.pdf`)
+  },
+
+  async generateCoverLetterPdf(resumeData, coverLetterParagraphs, fileNameBase = 'Karne_Saibhargav_CoverLetter') {
+    const jsPDF = await loadJsPdf()
+    const doc = new jsPDF({ unit: 'pt', format: 'letter' })
+
+    const pageWidth = doc.internal.pageSize.getWidth()
+    const marginLeft = 72
+    const marginRight = 72
+    const contentWidth = pageWidth - marginLeft - marginRight
+    let y = 80
+
+    const personalInfo = resumeData.personalInfo || {}
+
+    // Name
+    doc.setFont('times', 'bold')
+    doc.setFontSize(16)
+    doc.text(personalInfo.name || 'Saibhargav Karne', marginLeft, y)
+    y += 22
+
+    // Contact line
+    const contactParts = []
+    if (personalInfo.phone) contactParts.push(personalInfo.phone)
+    if (personalInfo.email) contactParts.push(personalInfo.email)
+    if (resumeData.contactLocation) contactParts.push(resumeData.contactLocation)
+    doc.setFont('times', 'normal')
+    doc.setFontSize(10)
+    doc.text(contactParts.join('  |  '), marginLeft, y)
+    y += 36
+
+    // Date
+    const dateStr = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+    doc.setFontSize(11)
+    doc.text(dateStr, marginLeft, y)
+    y += 28
+
+    // Greeting
+    doc.text('Dear Hiring Manager,', marginLeft, y)
+    y += 22
+
+    // Paragraphs — render with bold support
+    doc.setFontSize(11)
+    const lineH = 16
+    const paragraphs = Array.isArray(coverLetterParagraphs) ? coverLetterParagraphs : [coverLetterParagraphs]
+
+    for (const para of paragraphs) {
+      const segments = parseFormattedText(para || '')
+      const allTokens = []
+      segments.forEach(({ text: segText, bold }) => {
+        segText.split(/(\s+)/).forEach(part => {
+          if (!part.length) return
+          doc.setFont('times', bold ? 'bold' : 'normal')
+          doc.setFontSize(11)
+          allTokens.push({ text: part, bold, isSpace: /^\s+$/.test(part), width: doc.getTextWidth(part) })
+        })
+      })
+
+      const lines = []
+      let cur = []; let curW = 0
+      allTokens.forEach(tok => {
+        if (tok.isSpace) {
+          if (cur.length > 0) { cur.push(tok); curW += tok.width }
+        } else if (curW + tok.width > contentWidth && cur.length > 0) {
+          while (cur.length && cur[cur.length - 1].isSpace) cur.pop()
+          lines.push(cur); cur = [tok]; curW = tok.width
+        } else {
+          cur.push(tok); curW += tok.width
+        }
+      })
+      while (cur.length && cur[cur.length - 1].isSpace) cur.pop()
+      if (cur.length) lines.push(cur)
+
+      lines.forEach((line, li) => {
+        let rx = marginLeft
+        line.forEach(({ text: t, bold, width: tw }) => {
+          doc.setFont('times', bold ? 'bold' : 'normal')
+          doc.setFontSize(11)
+          doc.text(t, rx, y + li * lineH)
+          rx += tw
+        })
+      })
+      y += lines.length * lineH + 14
+    }
+
+    // Sign-off
+    y += 8
+    doc.setFont('times', 'normal')
+    doc.setFontSize(11)
+    doc.text('Sincerely,', marginLeft, y)
+    y += 36
+    doc.setFont('times', 'bold')
+    doc.text(personalInfo.name || 'Saibhargav Karne', marginLeft, y)
+
+    doc.save(`${fileNameBase}_CoverLetter.pdf`)
   }
 }
 

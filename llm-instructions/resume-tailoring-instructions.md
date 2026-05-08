@@ -295,6 +295,25 @@ Max 3–4 bold items per bullet. A bullet with **zero bold text** = automatic re
 
 ---
 
+## 📝 COVER LETTER (Generate for Every Output)
+
+Include a `coverLetter` array in the JSON — 4 paragraph strings, tailored to the JD.
+
+**Structure:**
+1. **Opening** (2–3 sentences): Lead with a direct statement about the role. Name the company and exact job title. ❌ Never open with "I am writing to apply…" or "I am excited to…"
+2. **Experience** (3–4 sentences): Highlight 2–3 of the most relevant achievements from the resume that directly address the JD's primary requirements. Use real metrics from the profile.
+3. **Value** (3–4 sentences): Articulate the cross-functional and delivery value — how Saibhargav's background translates to concrete business impact in this specific role.
+4. **Closing** (2 sentences): Express readiness to discuss. End professionally.
+
+**Rules:**
+- 250–350 words total
+- Use `**bold**` for the company name and job title in paragraph 1
+- Use only real metrics from the hardcoded profile
+- ❌ No filler: "team player", "passionate about", "I believe", "results-driven"
+- Tone: confident, specific, senior-level — same voice as the resume
+
+---
+
 ## 📍 CONTACT LOCATION RULE
 
 Use the JD's city to determine `contactLocation`:
@@ -400,6 +419,12 @@ Return ONLY this JSON — no explanation, no preamble:
       "dates": "Sep 2020 - Aug 2022",
       "achievements": ["..."]
     }
+  ],
+  "coverLetter": [
+    "Opening paragraph — direct hook, company name, exact job title...",
+    "Experience paragraph — 2-3 relevant achievements with metrics...",
+    "Value paragraph — cross-functional impact and delivery fit...",
+    "Closing paragraph — readiness to discuss, professional sign-off..."
   ]
 }
 ```

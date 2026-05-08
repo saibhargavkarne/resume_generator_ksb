@@ -54,10 +54,14 @@ export const STATE_CAPITAL_ADDRESSES = {
 
 /**
  * Returns the full residential address for a US state capital city.
- * Accepts "City" or "City, ST" format.
+ * Accepts "City", "City, ST", or a full address "123 St, City, ST 00000".
+ * Checks each comma-separated part so it works for all formats.
  */
 export function getAddressForCity(cityStr) {
   if (!cityStr) return null
-  const city = cityStr.split(',')[0].trim().toLowerCase()
-  return STATE_CAPITAL_ADDRESSES[city] || null
+  const parts = cityStr.split(',').map((p) => p.trim().toLowerCase())
+  for (const part of parts) {
+    if (STATE_CAPITAL_ADDRESSES[part]) return STATE_CAPITAL_ADDRESSES[part]
+  }
+  return null
 }
