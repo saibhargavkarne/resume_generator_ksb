@@ -129,6 +129,42 @@ Spread tools across all three roles — do NOT dump everything in one role:
 - Secondary tools → 1–2 mentions
 - Niche/rare tools → at least 1 mention
 
+### STEP 5 — SKILLS TIMELINE VALIDATION (MANDATORY)
+
+Every tool or technology mentioned in a bullet must have been available **and in mainstream use** during that role's date range. Writing Gen AI skills into a 2021 project is an automatic credibility failure.
+
+**Role date ranges:**
+- Domain Company (current role): Sep 2025 – Present
+- Microsoft: May 2024 – Sep 2025
+- Accenture: Sep 2020 – Aug 2022
+
+**Technology availability reference — do NOT use a tool in a role that predates its mainstream adoption:**
+
+| Technology | Mainstream Since | Notes |
+|---|---|---|
+| Gen AI / LLM tools / AI Agents | 2023 | Never place in Accenture role |
+| ChatGPT / OpenAI API | 2023 | Never place in Accenture role |
+| GitHub Copilot | 2022 | Avoid in Accenture role |
+| Apache Iceberg | 2021 | Use cautiously in Accenture role |
+| dbt (mainstream) | 2021 | OK for Accenture role |
+| Delta Lake | 2020 | OK for Accenture role |
+| Databricks | 2018 | OK for all roles |
+| MLflow | 2019 | OK for all roles |
+| Prefect / Dagster | 2020 | OK for Accenture role |
+| Apache Airflow (mainstream) | 2018 | OK for all roles |
+| Snowflake (mainstream) | 2019 | OK for all roles |
+| Kafka (data eng mainstream) | 2017 | OK for all roles |
+| AWS Glue | 2017 | OK for all roles |
+| Azure Data Factory | 2015 | OK for all roles |
+| Amazon Redshift | 2013 | OK for all roles |
+| Kubernetes (mainstream) | 2018 | OK for all roles |
+| Terraform (mainstream) | 2016 | OK for all roles |
+| GitHub Actions | 2019 | OK for all roles |
+| PySpark / Apache Spark | 2014 | OK for all roles |
+| Ray / Dask | 2019 | OK for all roles |
+
+**Rule:** If the JD requires a tool that postdates a specific role, place that tool only in the more recent role(s) — never backdate skills to make an older role look more current.
+
 ---
 
 ## 🔥 EXPERIENCE REWRITING ENGINE
@@ -259,6 +295,74 @@ Max 3–4 bold items per bullet. A bullet with **zero bold text** = automatic re
 
 ---
 
+## 📍 CONTACT LOCATION RULE
+
+Use the JD's city to determine `contactLocation`:
+
+1. If the JD specifies a city that matches a US state capital below → use the **full residential street address** from the table as `contactLocation`
+2. If the JD city does not match any capital, or if the JD is remote / no city specified → use `"Dallas, TX"`
+
+| State Capital | Full Address |
+|---|---|
+| Montgomery, AL | 3182 Cloverdale Rd, Montgomery, AL 36106 |
+| Juneau, AK | 3304 Pioneer Ave, Juneau, AK 99801 |
+| Phoenix, AZ | 3007 W Rancho Dr, Phoenix, AZ 85017 |
+| Little Rock, AR | 4718 Kavanaugh Blvd, Little Rock, AR 72207 |
+| Sacramento, CA | 5201 H St, Sacramento, CA 95819 |
+| Denver, CO | 3407 Ash St, Denver, CO 80207 |
+| Hartford, CT | 52 Outlook Ave, Hartford, CT 06106 |
+| Dover, DE | 128 Pear Tree Run, Dover, DE 19904 |
+| Tallahassee, FL | 2611 Killearn Center Blvd, Tallahassee, FL 32309 |
+| Atlanta, GA | 617 Brookhaven Way NE, Atlanta, GA 30319 |
+| Honolulu, HI | 2748 Manoa Rd, Honolulu, HI 96822 |
+| Boise, ID | 3311 Meander Way, Boise, ID 83705 |
+| Springfield, IL | 1847 Chatham Rd, Springfield, IL 62704 |
+| Indianapolis, IN | 5312 Winthrop Ave, Indianapolis, IN 46220 |
+| Des Moines, IA | 4109 Ingersoll Ave, Des Moines, IA 50312 |
+| Topeka, KS | 2934 SW MacVicar Ave, Topeka, KS 66611 |
+| Frankfort, KY | 418 Westover Ave, Frankfort, KY 40601 |
+| Baton Rouge, LA | 3705 Kleinert Ave, Baton Rouge, LA 70806 |
+| Augusta, ME | 37 Cony St, Augusta, ME 04330 |
+| Annapolis, MD | 824 Sherwood Forest Dr, Annapolis, MD 21401 |
+| Boston, MA | 42 Pinckney St, Boston, MA 02114 |
+| Lansing, MI | 2508 Sheridan Rd, Lansing, MI 48910 |
+| St. Paul, MN | 1635 Fairmount Ave, St. Paul, MN 55105 |
+| Jackson, MS | 3214 Ridgewood Rd, Jackson, MS 39211 |
+| Jefferson City, MO | 512 Moreau Dr, Jefferson City, MO 65109 |
+| Helena, MT | 924 Benton Ave, Helena, MT 59601 |
+| Lincoln, NE | 5631 Vine St, Lincoln, NE 68505 |
+| Carson City, NV | 1408 Snyder Ave, Carson City, NV 89703 |
+| Concord, NH | 29 Rumford St, Concord, NH 03301 |
+| Trenton, NJ | 814 Stuyvesant Ave, Trenton, NJ 08618 |
+| Santa Fe, NM | 728 Acequia Madre, Santa Fe, NM 87505 |
+| Albany, NY | 214 Whitehall Rd, Albany, NY 12209 |
+| Raleigh, NC | 3609 Granville Dr, Raleigh, NC 27609 |
+| Bismarck, ND | 1724 Woodridge Dr, Bismarck, ND 58503 |
+| Columbus, OH | 2915 Bryden Rd, Columbus, OH 43209 |
+| Oklahoma City, OK | 3821 NW 58th Terr, Oklahoma City, OK 73112 |
+| Salem, OR | 4307 Kuebler Blvd S, Salem, OR 97302 |
+| Harrisburg, PA | 319 Hummel Ave, Harrisburg, PA 17104 |
+| Providence, RI | 47 Elmgrove Ave, Providence, RI 02906 |
+| Columbia, SC | 3118 Trenholm Rd, Columbia, SC 29204 |
+| Pierre, SD | 614 Poplar Ave, Pierre, SD 57501 |
+| Nashville, TN | 1427 Linden Ave, Nashville, TN 37212 |
+| Austin, TX | 2209 Enfield Rd, Austin, TX 78703 |
+| Salt Lake City, UT | 1743 Harvard Ave, Salt Lake City, UT 84105 |
+| Montpelier, VT | 23 Terrace St, Montpelier, VT 05602 |
+| Richmond, VA | 4307 Hanover Ave, Richmond, VA 23221 |
+| Olympia, WA | 2814 Eastside St NE, Olympia, WA 98506 |
+| Charleston, WV | 1132 Quarrier St, Charleston, WV 25301 |
+| Madison, WI | 3027 Nakoma Rd, Madison, WI 53711 |
+| Cheyenne, WY | 918 E 16th St, Cheyenne, WY 82001 |
+
+**Examples:**
+- JD says "Austin, TX" → `"contactLocation": "2209 Enfield Rd, Austin, TX 78703"`
+- JD says "Denver, CO" → `"contactLocation": "3407 Ash St, Denver, CO 80207"`
+- JD says "New York, NY" (not a capital) → `"contactLocation": "Dallas, TX"`
+- JD says "Remote" → `"contactLocation": "Dallas, TX"`
+
+---
+
 ## OUTPUT FORMAT
 
 Return ONLY this JSON — no explanation, no preamble:
@@ -300,6 +404,6 @@ Return ONLY this JSON — no explanation, no preamble:
 }
 ```
 
-**`contactLocation`**: Use the JD's city if specified, otherwise `"Dallas, TX"`.  
+**`contactLocation`**: Use the full street address from the capital address table if the JD city matches; otherwise `"Dallas, TX"`.  
 **`fileName`**: PascalCase, no spaces — e.g., `Karne_Saibhargav_Google_SeniorDataEngineer`  
 **`company` (first role)**: Selected from the domain mapping table in Step 1.5 — e.g., `"Google"` for Big Tech / SaaS JDs.

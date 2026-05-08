@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { BriefcaseIcon, ChevronDown, Download, Eye, RefreshCw, Search, Trash2, X } from 'lucide-react'
+import { BriefcaseIcon, ChevronDown, ClipboardCopy, Download, Eye, MapPin, RefreshCw, Search, Trash2, X } from 'lucide-react'
 import { DEFAULT_PROFILE_ID, RESUME_PROFILES, getProfileById } from '../data/profiles'
 
 function formatDate(iso) {
@@ -320,12 +320,21 @@ export default function Tracker() {
                 <h3 className="text-lg font-semibold text-white">Job Description</h3>
                 <p className="text-sm text-slate-400">{jobDescriptionModal.title}</p>
               </div>
-              <button
-                onClick={() => setJobDescriptionModal({ open: false, title: '', content: '' })}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl text-slate-400 transition hover:bg-slate-800 hover:text-white"
-              >
-                <X className="h-4 w-4" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => navigator.clipboard.writeText(jobDescriptionModal.content)}
+                  title="Copy to clipboard"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-2xl text-slate-400 transition hover:bg-slate-800 hover:text-emerald-400"
+                >
+                  <ClipboardCopy className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => setJobDescriptionModal({ open: false, title: '', content: '' })}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-2xl text-slate-400 transition hover:bg-slate-800 hover:text-white"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
             </div>
             <div className="max-h-[60vh] overflow-y-auto px-6 py-5">
               <pre className="whitespace-pre-wrap font-sans text-sm leading-6 text-slate-300">
@@ -504,6 +513,19 @@ export default function Tracker() {
                       {application.profileLabel && <span>{application.profileLabel}</span>}
                       <span>Applied {formatDate(application.date)}</span>
                     </div>
+                    {application.contactLocation && (
+                      <div className="mt-2 flex items-center gap-2">
+                        <MapPin className="h-3 w-3 shrink-0 text-slate-600" />
+                        <span className="text-xs text-slate-500">{application.contactLocation}</span>
+                        <button
+                          onClick={() => navigator.clipboard.writeText(application.contactLocation)}
+                          title="Copy address"
+                          className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded text-slate-600 transition hover:text-emerald-400"
+                        >
+                          <ClipboardCopy className="h-3 w-3" />
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-3">

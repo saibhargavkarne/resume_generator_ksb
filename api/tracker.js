@@ -132,7 +132,7 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'POST') {
-    const { fileName, company, role, profileId, profileLabel, resumeJson, jobDescription } = req.body
+    const { fileName, company, role, profileId, profileLabel, contactLocation, resumeJson, jobDescription } = req.body
 
     if (!fileName || !resumeJson) {
       return res.status(400).json({ error: 'fileName and resumeJson are required' })
@@ -147,6 +147,7 @@ export default async function handler(req, res) {
       role: role || '',
       profileId: profileId || '',
       profileLabel: profileLabel || '',
+      contactLocation: contactLocation || '',
       date,
       hasJobDescription: Boolean(jobDescription?.trim())
     }

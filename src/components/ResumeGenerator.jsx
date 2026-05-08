@@ -25,6 +25,7 @@ function applyOriginalCompanyOverride(data, enabled) {
 
   return {
     ...data,
+    contactLocation: 'Dallas, TX',
     workExperience: data.workExperience.map((experience, index) => (
       index === 0
         ? { ...experience, company: ORIGINAL_COMPANY_NAME }
@@ -178,6 +179,7 @@ export default function ResumeGenerator() {
           role,
           profileId: selectedProfile.id,
           profileLabel: selectedProfile.label,
+          contactLocation: effectiveParsedData.contactLocation || 'Dallas, TX',
           resumeJson: buildStoredResumeJson(),
           jobDescription
         })
@@ -260,7 +262,7 @@ export default function ResumeGenerator() {
               <div>
                 <p className="text-sm font-medium text-slate-200">Use original recent company</p>
                 <p className="mt-1 text-xs leading-5 text-slate-500">
-                  When enabled, the most recent company in the parsed resume is hard-set to {ORIGINAL_COMPANY_NAME} and the JSON company value for the first role is ignored.
+                  When enabled: company is set to <span className="text-slate-300 font-medium">{ORIGINAL_COMPANY_NAME}</span>, resume location is set to <span className="text-slate-300 font-medium">Dallas, TX</span>, and the address shown on the right reflects Dallas, TX regardless of JD city.
                 </p>
               </div>
               <button
@@ -345,9 +347,9 @@ export default function ResumeGenerator() {
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">File Name</p>
                 <p className={`font-mono text-sm ${hasParsedData ? 'text-slate-200' : 'text-slate-500'}`}>{fileName}</p>
               </div>
-              <div className="text-right">
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Location</p>
-                <p className={`text-sm ${hasParsedData ? 'text-slate-200' : 'text-slate-500'}`}>{location}</p>
+              <div className="max-w-[200px] text-right">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Address</p>
+                <p className={`text-sm leading-snug ${hasParsedData ? 'text-slate-200' : 'text-slate-500'}`}>{location}</p>
               </div>
             </div>
 
