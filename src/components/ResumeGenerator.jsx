@@ -167,7 +167,8 @@ export default function ResumeGenerator() {
 
     setJobDescriptionError('')
     setSaveStatus('saving')
-    const { company, role } = parseFileName(effectiveParsedData.resumeMeta.fileName)
+    const { company, role: roleFromFileName } = parseFileName(effectiveParsedData.resumeMeta.fileName)
+    const role = effectiveParsedData.jobTitle || roleFromFileName
 
     try {
       const res = await fetch('/api/tracker', {
