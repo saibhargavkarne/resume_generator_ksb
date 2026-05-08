@@ -141,8 +141,8 @@ export default function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {tab === 'generate' && <ResumeGenerator />}
-        {tab === 'tracker' && <Tracker />}
+        <div className={tab === 'generate' ? '' : 'hidden'}><ResumeGenerator /></div>
+        <div className={tab === 'tracker' ? '' : 'hidden'}><Tracker /></div>
       </main>
     </div>
   )
