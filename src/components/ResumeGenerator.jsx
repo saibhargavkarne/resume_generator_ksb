@@ -267,6 +267,7 @@ export default function ResumeGenerator() {
         })
       })
       setVendorSuccess(true)
+      window.dispatchEvent(new CustomEvent('submission-logged'))
       setVendorForm({
         submissionDate: new Date().toISOString().split('T')[0],
         vendorCompany: '',
@@ -695,6 +696,19 @@ export default function ResumeGenerator() {
           </div>
 
           <button
+            onClick={() => { setShowVendorModal(true); setVendorSuccess(false) }}
+            disabled={!hasParsedData || !hasJobDescription}
+            className={`flex w-full items-center justify-center gap-2 rounded-2xl border py-3 text-sm font-medium transition ${
+              hasParsedData && hasJobDescription
+                ? 'border-teal-800/50 bg-teal-900/20 text-teal-400 hover:bg-teal-900/40'
+                : 'cursor-not-allowed border-slate-800 bg-slate-900 text-slate-600'
+            }`}
+          >
+            <Send className="h-4 w-4" />
+            Log Vendor Submission
+          </button>
+
+          <button
             onClick={handleSaveToTracker}
             disabled={!canSave}
             className={`flex w-full items-center justify-center gap-2 rounded-2xl py-3 font-medium transition-colors ${
@@ -722,19 +736,6 @@ export default function ResumeGenerator() {
                 Save to Job Tracker
               </>
             )}
-          </button>
-
-          <button
-            onClick={() => { setShowVendorModal(true); setVendorSuccess(false) }}
-            disabled={!hasParsedData || !hasJobDescription}
-            className={`flex w-full items-center justify-center gap-2 rounded-2xl border py-3 text-sm font-medium transition ${
-              hasParsedData && hasJobDescription
-                ? 'border-teal-800/50 bg-teal-900/20 text-teal-400 hover:bg-teal-900/40'
-                : 'cursor-not-allowed border-slate-800 bg-slate-900 text-slate-600'
-            }`}
-          >
-            <Send className="h-4 w-4" />
-            Log Vendor Submission
           </button>
         </div>
       </div>

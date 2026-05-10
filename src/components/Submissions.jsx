@@ -17,11 +17,11 @@ const STATUS_OPTIONS = [
 ]
 
 const STATUS_STYLES = {
-  'Waiting for Response': 'bg-slate-700/60 text-slate-300',
+  'Waiting for Response': 'bg-amber-900/30 text-amber-400',
   'Not Moving Forward':   'bg-red-900/40 text-red-400',
-  'Interview':            'bg-indigo-900/40 text-indigo-300',
-  'Not Chosen':           'bg-orange-900/40 text-orange-400',
-  'Offer':                'bg-emerald-900/40 text-emerald-400'
+  'Interview':            'bg-green-900/30 text-green-300',
+  'Not Chosen':           'bg-orange-900/30 text-orange-400',
+  'Offer':                'bg-emerald-800/50 text-emerald-300'
 }
 
 function formatDate(iso) {
@@ -106,6 +106,12 @@ export default function Submissions() {
   }, [])
 
   useEffect(() => { fetchSubmissions() }, [fetchSubmissions])
+
+  useEffect(() => {
+    const handler = () => fetchSubmissions()
+    window.addEventListener('submission-logged', handler)
+    return () => window.removeEventListener('submission-logged', handler)
+  }, [fetchSubmissions])
 
   const profiledSubmissions = useMemo(() =>
     profileFilter === 'total'
@@ -329,14 +335,19 @@ export default function Submissions() {
                   </td>
                   <td className="px-4 py-3 text-slate-300">{sub.clientName || '—'}</td>
                   <td className="px-4 py-3">
-                    <select
-                      value={sub.status || 'Waiting for Response'}
-                      onChange={(e) => handleStatusChange(sub.id, e.target.value)}
-                      disabled={updatingId === sub.id}
-                      className={`rounded-xl border-0 px-2 py-1 text-xs font-medium focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer ${STATUS_STYLES[sub.status] || STATUS_STYLES['Waiting for Response']}`}
-                    >
-                      {STATUS_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
-                    </select>
+                    <div className="relative inline-block">
+                      <span className={`pointer-events-none inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_STYLES[sub.status] || STATUS_STYLES['Waiting for Response']}`}>
+                        {sub.status || 'Waiting for Response'}
+                      </span>
+                      <select
+                        value={sub.status || 'Waiting for Response'}
+                        onChange={(e) => handleStatusChange(sub.id, e.target.value)}
+                        disabled={updatingId === sub.id}
+                        className="absolute inset-0 w-full cursor-pointer opacity-0 disabled:cursor-not-allowed"
+                      >
+                        {STATUS_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+                      </select>
+                    </div>
                   </td>
                   <td className="px-4 py-3">
                     <button onClick={() => handleViewJd(sub)}
