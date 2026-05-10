@@ -59,7 +59,8 @@ export default function ResumeGenerator() {
     pocName: '',
     pocEmail: '',
     clientName: '',
-    status: 'Waiting for Response'
+    status: 'Waiting for Response',
+    phone: ''
   })
 
   const selectedProfile = getProfileById(selectedProfileId)
@@ -229,6 +230,25 @@ export default function ResumeGenerator() {
     }
   }
 
+  const parseSignature = (text) => {
+    if (!text) return {}
+    const emailRe = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g
+    const emails = text.match(emailRe) || []
+    const phoneRe = /(?:\+?1[\s\-.]?)?\(?\d{3}\)?[\s\-.]?\d{3}[\s\-.]?\d{4}/g
+    const seen = new Set(); const phones = []
+    let pm
+    while ((pm = phoneRe.exec(text)) !== null) {
+      const norm = pm[0].replace(/\D/g, '').slice(-10)
+      if (!seen.has(norm)) { seen.add(norm); phones.push(pm[0].trim()) }
+      if (phones.length >= 2) break
+    }
+    const sigIdx = text.search(/\b(best regards|regards|thanks|sincerely|cheers|warm regards|thank you|best|kind regards)[,\s]*\n/i)
+    const block = sigIdx >= 0 ? text.slice(sigIdx) : text.slice(Math.max(0, text.length - 600))
+    const skip = [/^(best regards|regards|thanks|sincerely|cheers|warm regards|thank you|best|kind regards)/i, /@/, /^\+?\d/, /^(phone|mobile|direct|office|fax|tel|www\.|http|linkedin|p:|m:|d:|o:|f:)/i, /[<>[\]]/, /^\s*[-_=*]+\s*$/]
+    const sigLines = block.split('\n').map(l => l.replace(/\|/g, '').trim()).filter(l => l.length > 1 && l.length < 80).filter(l => !skip.some(r => r.test(l)))
+    return { pocEmail: emails[0] || '', phone: phones.join(' / '), pocName: sigLines[0] || '', vendorCompany: sigLines.find((l, i) => i > 0 && l.length > 2) || '' }
+  }
+
   const handleVendorSubmit = async (e) => {
     e.preventDefault()
     setVendorSubmitting(true)
@@ -242,7 +262,8 @@ export default function ResumeGenerator() {
           fileName: effectiveParsedData?.resumeMeta?.fileName || '',
           profileId: selectedProfile.id,
           resumeJson: hasParsedData ? buildStoredResumeJson() : null,
-          jobDescription: jobDescription || ''
+          jobDescription: jobDescription || '',
+          phone: vendorForm.phone || ''
         })
       })
       setVendorSuccess(true)
@@ -296,6 +317,16 @@ export default function ResumeGenerator() {
             </button>
           </div>
           <form onSubmit={handleVendorSubmit} className="space-y-4 px-6 py-5">
+            {jobDescription.trim() && (
+              <button type="button"
+                onClick={() => {
+                  const parsed = parseSignature(jobDescription)
+                  setVendorForm((prev) => ({ ...prev, ...Object.fromEntries(Object.entries(parsed).filter(([, v]) => v)) }))
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-indigo-700/50 bg-indigo-900/20 py-2 text-xs font-medium text-indigo-400 transition hover:bg-indigo-900/40">
+                Auto-fill from JD Signature
+              </button>
+            )}
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className={labelCls}>Submission Date *</label>
@@ -323,6 +354,10 @@ export default function ResumeGenerator() {
                 <label className={labelCls}>POC Email *</label>
                 <input type="email" required placeholder="poc@vendor.com" value={vendorForm.pocEmail} onChange={vf('pocEmail')} className={inputCls} />
               </div>
+            </div>
+            <div>
+              <label className={labelCls}>Phone (use / to separate two numbers)</label>
+              <input type="text" placeholder="(214) 555-0123 / (972) 555-9876" value={vendorForm.phone} onChange={vf('phone')} className={inputCls} />
             </div>
             <div>
               <label className={labelCls}>Status</label>
@@ -691,7 +726,12 @@ export default function ResumeGenerator() {
 
           <button
             onClick={() => { setShowVendorModal(true); setVendorSuccess(false) }}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl border border-teal-800/50 bg-teal-900/20 py-3 text-sm font-medium text-teal-400 transition hover:bg-teal-900/40"
+            disabled={!hasParsedData || !hasJobDescription}
+            className={`flex w-full items-center justify-center gap-2 rounded-2xl border py-3 text-sm font-medium transition ${
+              hasParsedData && hasJobDescription
+                ? 'border-teal-800/50 bg-teal-900/20 text-teal-400 hover:bg-teal-900/40'
+                : 'cursor-not-allowed border-slate-800 bg-slate-900 text-slate-600'
+            }`}
           >
             <Send className="h-4 w-4" />
             Log Vendor Submission

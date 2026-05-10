@@ -73,7 +73,7 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const {
       submissionDate, vendorCompany, rtrAmount,
-      pocName, pocEmail, clientName, status,
+      pocName, pocEmail, phone, clientName, status,
       fileName, profileId, resumeJson, jobDescription
     } = req.body
 
@@ -88,6 +88,7 @@ export default async function handler(req, res) {
       rtrAmount: rtrAmount || '',
       pocName: pocName || '',
       pocEmail: pocEmail || '',
+      phone: phone || '',
       clientName: clientName || '',
       status: status || 'Waiting for Response',
       fileName: fileName || '',

@@ -110,8 +110,8 @@ export default function App() {
             <nav className="flex gap-1 rounded-xl bg-slate-800 p-1">
               {[
                 { id: 'generate',     label: 'Generate' },
-                { id: 'tracker',      label: 'Applications' },
-                { id: 'submissions',  label: 'Submissions' }
+                { id: 'submissions',  label: 'Submissions' },
+                { id: 'tracker',      label: 'Applications' }
               ].map(({ id, label }) => (
                 <button
                   key={id}
