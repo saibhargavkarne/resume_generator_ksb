@@ -373,45 +373,33 @@ Include **100% of JD tools**. JD tools listed **first** within each category. Ma
 
 ---
 
-## 🔥 PROFESSIONAL SUMMARY GUIDANCE
+## 🔥 PROFESSIONAL SUMMARY — FULL-PAGE CONTRACT FORMAT
 
-This is a **senior, long-form summary** — 6–8 comprehensive sentences.
+`professionalSummary` is an **array of bullet strings**, not a paragraph. It must fill a full page when rendered — write **12–16 bullets**.
 
-### MODE-SPECIFIC SUMMARY STRUCTURE
+### BULLET RULES
+- Each bullet starts with a **bold category label**: `"**C# Plugin Development:** ..."`
+- Each bullet satisfies a JD requirement AND expands into adjacent depth — never just the keyword
+- If JD mentions "plugins" → cover C# plugins, custom workflow activities, event handlers, synchronous/asynchronous execution, plugin profiling with XRMToolBox, performance tuning
+- If JD mentions "Dataverse" → cover entity schema, security roles, field-level permissions, BPF, calculated/rollup fields, query optimization (FetchXML/OData), 45% load time improvement
+- If JD mentions "Power Automate" → cover approval flows, notification workflows, data sync, error handling, 1M+ records/month processing
+- If JD mentions "Azure integration" → cover Azure Functions, Logic Apps, Service Bus, REST APIs, SAML SSO, 50% incident reduction
+- If JD mentions "ALM" → cover managed solutions, Azure DevOps CI/CD, environment strategy, 40% release cycle reduction
+- Use real metrics from the hardcoded profile where applicable
+- Bold every JD tool and every metric within the bullet text
+- Tone: authoritative, senior, technically precise — enterprise-grade throughout
 
-**D365_ONLY:**
-1. Opening: Years of experience + exact JD role title + D365 CE, Dataverse, C# plugins, CRM customization
-2. D365 CE technical depth: plugins, workflow activities, BPF, entity/form customization, JavaScript web resources, PCF
-3. Integration expertise: Azure Functions, Logic Apps, REST/OData APIs — in enterprise D365 context
-4. Security and performance: Azure AD/SSO, Dataverse security model, query optimization, form performance
-5. ALM and DevOps: managed solutions, Azure DevOps CI/CD, environment strategy, multi-environment governance
-6. Enterprise delivery: multi-region CRM, high-availability, cross-functional stakeholders
-7. Closing: business impact focus, platform ownership, and measurable outcomes
+### MODE-SPECIFIC BULLET CATEGORIES TO COVER
 
-**POWER_APPS_ONLY:**
-1. Opening: Years of experience + exact JD role title + Power Automate, Power BI, Power Pages, Dataverse
-2. Power Platform delivery depth: approval flows, Power BI with RLS/DAX, Power Pages portals, Power Platform connectors
-3. Integration: Azure Functions, Logic Apps, SharePoint, REST APIs — as Power Platform integration layer
-4. Governance and ALM: managed solutions, Azure DevOps, environment strategy, connection references, Power Platform CLI
-5. Performance and security: Dataverse security model, Power BI RLS, Azure AD-enabled portal access
-6. Enterprise delivery: enterprise-scale Power Platform, cross-functional stakeholders, user adoption (150+ users)
-7. Closing: business impact metrics and platform transformation outcomes
+**D365_ONLY (12–16 bullets covering):**
+D365 CE enterprise engineering, C# plugin architecture & profiling, custom workflow activities, BPF design, entity/form/view customization, FetchXML & OData query optimization, Dataverse security model, Azure integrations (Functions, Logic Apps, Service Bus, REST), SSO & Azure AD, ALM & CI/CD, performance tuning, multi-region delivery, production support & SLA, cross-functional stakeholder delivery
 
-**MIXED:**
-1. Opening: Years + exact JD title + both D365 CE and Power Platform tools
-2. D365 CE technical depth
-3. Power Platform delivery depth
-4. Integration and Azure services
-5. ALM, governance, and security
-6. Enterprise delivery and stakeholder collaboration
-7. Closing: comprehensive business impact
+**POWER_APPS_ONLY (12–16 bullets covering):**
+Power Automate Cloud & Desktop flows, approval workflow architecture, Power BI with RLS & DAX, Power Pages/Portal implementations, Canvas App patterns, Power Platform ALM, Azure DevOps CI/CD, SharePoint integration, Dataverse as data platform, security governance, cross-functional delivery, user adoption metrics
 
-**Always include:**
-- D365_ONLY: "enterprise-grade CRM", "Dynamics 365 CE", "Application Lifecycle Management (ALM)", "cross-functional stakeholders"
-- POWER_APPS_ONLY: "enterprise Power Platform", "Power Platform", "Application Lifecycle Management (ALM)", "cross-functional stakeholders"
-- MIXED: "enterprise-grade CRM", "Dynamics 365 CE", "Power Platform", "Application Lifecycle Management (ALM)", "cross-functional stakeholders"
+**MIXED (14–16 bullets covering both stacks equally)**
 
-**Bold** 3–5 key technologies or metrics. Tone: authoritative, senior, technically precise.
+**Always bold** 2–4 items per bullet. Tone: authoritative, senior, enterprise-grade.
 
 ---
 
@@ -550,7 +538,11 @@ Return ONLY this JSON — no explanation, no preamble:
   },
   "contactLocation": "Dallas, TX",
   "jobTitle": "Exact Senior D365 / CRM / Power Platform Title from JD",
-  "professionalSummary": "6–8 sentence comprehensive senior summary tailored to JD and detected mode...",
+  "professionalSummary": [
+    "**Category Label:** Detailed bullet covering JD requirement + adjacent depth with **metrics**...",
+    "**Category Label:** Another bullet...",
+    "...12–16 total bullets..."
+  ],
   "skills": {
     "Dynamics 365 & Power Platform": ["Dynamics 365 CE", "Dataverse", "..."],
     "Development & Customization": ["C#", "Plugins", "..."]

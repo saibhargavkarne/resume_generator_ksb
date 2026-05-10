@@ -354,36 +354,31 @@ Include **100% of JD tools**. JD tools listed **first** within each category. Ma
 
 ---
 
-## 🔥 PROFESSIONAL SUMMARY
+## 🔥 PROFESSIONAL SUMMARY — FULL-PAGE CONTRACT FORMAT
 
-**Structure:** 3–5 sentences tailored to the JD and detected mode.
+`professionalSummary` is an **array of bullet strings**, not a paragraph. It must fill a full page when rendered — write **10–14 bullets**.
 
-### MODE-SPECIFIC SUMMARY STRUCTURE
+### BULLET RULES
+- Each bullet starts with a **bold category label**: `"**Canvas Apps & UX Architecture:** ..."`
+- Each bullet satisfies a JD requirement AND expands into adjacent depth — never just the keyword
+- If JD mentions "Power Automate" → bullet covers Cloud flows, Desktop flows, approval routing, connectors, error handling, SLA alerting
+- If JD mentions "Canvas Apps" → bullet covers delegation, preloaded collections, performance tuning, component libraries, offline mode patterns
+- If JD mentions "Dataverse" → bullet covers entity schema, security roles, field-level permissions, BPF, calculated/rollup fields
+- Use real metrics from the hardcoded profile where applicable
+- Bold every JD tool and every metric within the bullet text
+- Tone: confident, senior, technically precise
 
-**D365_ONLY:**
-1. Years of experience + exact JD role title + D365 CE, Dataverse, Model-Driven Apps, C# plugins
-2. Technical depth: Business Process Flows, entity/form customization, plugin architecture, JavaScript web resources
-3. Integration and platform statement: REST APIs, Azure Functions, Logic Apps within D365 context
-4. Business impact: CRM transformation, operational efficiency, enterprise user adoption
+### MODE-SPECIFIC BULLET CATEGORIES TO COVER
 
-**POWER_APPS_ONLY:**
-1. Years of experience + exact JD role title + Canvas Apps, Power Automate (Cloud & Desktop), Power Pages, Power Fx
-2. Technical depth: multi-level approval workflows, Power Automate Desktop automation, custom connectors, SAP/SharePoint/Azure integrations
-3. Platform ownership: Dataverse modeling, ALM across Dev/Test/Prod, performance optimization (delegation, collections)
-4. Business impact: $1M+/quarter savings, 60% workload reduction, 200+ active users, 40% data load improvement
+**D365_ONLY (10–14 bullets covering):**
+D365 CRM customization, Model-Driven Apps, C# plugins & workflow activities, Business Process Flows, entity/form/view design, FetchXML & OData, Dataverse security model, Azure integrations (Functions, Logic Apps, REST), ALM & managed solutions, JavaScript web resources, multi-environment governance, cross-functional delivery
 
-**MIXED:**
-1. Years of experience + exact JD title + both D365 CE and Power Platform tools
-2. D365 technical depth + Power Platform delivery capabilities
-3. Integration, performance, and ALM statement
-4. Business impact with real metrics
+**POWER_APPS_ONLY (10–14 bullets covering):**
+Canvas App architecture & performance, Power Automate Cloud flows, Power Automate Desktop, multi-level approval workflows, custom connectors, SAP/SharePoint/Azure integrations, Power Pages/Portals, Power Fx logic, Dataverse modeling, Power BI reporting, ALM & DevOps, cross-functional delivery, business impact metrics
 
-**Always include:**
-- D365_ONLY: "enterprise Dynamics 365 solutions", "business process automation", "cross-functional stakeholders"
-- POWER_APPS_ONLY: "enterprise Power Platform solutions", "business process automation", "low-code / no-code", "cross-functional stakeholders"
-- MIXED: both "enterprise Dynamics 365" and "enterprise Power Platform", "business process automation", "cross-functional stakeholders"
+**MIXED (12–14 bullets covering both stacks equally)**
 
-**Bold** 2–4 key technologies or metrics. Tone: confident, direct, solution-owner.
+**Always bold** 2–4 items per bullet. Tone: confident, direct, solution-owner.
 
 ---
 
@@ -519,7 +514,11 @@ Return ONLY this JSON — no explanation, no preamble:
   },
   "contactLocation": "Dallas, TX",
   "jobTitle": "Exact Power Platform / D365 Job Title from JD",
-  "professionalSummary": "3–5 sentence paragraph tailored to JD and detected mode...",
+  "professionalSummary": [
+    "**Category Label:** Detailed bullet covering JD requirement + adjacent depth with **metrics**...",
+    "**Category Label:** Another bullet...",
+    "...10–14 total bullets..."
+  ],
   "skills": {
     "Power Platform": ["Canvas Apps", "Power Automate", "..."],
     "Dynamics 365": ["D365 CE", "..."]

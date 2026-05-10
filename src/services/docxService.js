@@ -224,13 +224,22 @@ const docxService = {
 
     if (resumeData.summary) {
       sections.push(createSectionHeader('PROFESSIONAL SUMMARY'))
-      sections.push(
-        new Paragraph({
-          children: buildTextRuns(resumeData.summary),
-          spacing: { after: 100, line: 240 },
-          alignment: AlignmentType.BOTH
+      if (resumeData.contractMode && Array.isArray(resumeData.summary)) {
+        resumeData.summary.forEach((bullet, index) => {
+          sections.push(createBulletParagraph(bullet, index === resumeData.summary.length - 1))
         })
-      )
+      } else {
+        const summaryText = Array.isArray(resumeData.summary)
+          ? resumeData.summary.join(' ')
+          : resumeData.summary
+        sections.push(
+          new Paragraph({
+            children: buildTextRuns(summaryText),
+            spacing: { after: 100, line: 240 },
+            alignment: AlignmentType.BOTH
+          })
+        )
+      }
     }
 
     if (resumeData.skills && Object.keys(resumeData.skills).length > 0) {
@@ -587,7 +596,14 @@ const docxService = {
 
     if (resumeData.summary) {
       drawSectionHeader('PROFESSIONAL SUMMARY')
-      drawWrappedText(resumeData.summary, { lineHeight: 14, after: 4 })
+      if (resumeData.contractMode && Array.isArray(resumeData.summary)) {
+        drawBullets(resumeData.summary)
+      } else {
+        const summaryText = Array.isArray(resumeData.summary)
+          ? resumeData.summary.join(' ')
+          : resumeData.summary
+        drawWrappedText(summaryText, { lineHeight: 14, after: 4 })
+      }
     }
 
     if (resumeData.skills && Object.keys(resumeData.skills).length > 0) {

@@ -5,6 +5,8 @@ import { getAddressForCity } from '../data/stateAddresses'
 
 const ORIGINAL_COMPANY_NAME = 'Kraft Heinz'
 const ORIGINAL_COMPANY_PROFILE_ID = 'data-engineer-4yr'
+const D365_6YR_PROFILE_ID = 'd365-power-platform-6yr'
+const D365_10YR_PROFILE_ID = 'd365-power-platform-10yr'
 
 function camelToSpaces(str) {
   return str.replace(/([A-Z])/g, ' $1').trim()
@@ -40,6 +42,7 @@ export default function ResumeGenerator() {
   const [jobDescription, setJobDescription] = useState('')
   const [selectedProfileId, setSelectedProfileId] = useState(DEFAULT_PROFILE_ID)
   const [useOriginalCompany, setUseOriginalCompany] = useState(true)
+  const [isContractMode, setIsContractMode] = useState(true)
   const [parseError, setParseError] = useState('')
   const [jobDescriptionError, setJobDescriptionError] = useState('')
   const [parsedData, setParsedData] = useState(null)
@@ -49,6 +52,10 @@ export default function ResumeGenerator() {
 
   const selectedProfile = getProfileById(selectedProfileId)
   const showOriginalCompanyToggle = selectedProfile.id === ORIGINAL_COMPANY_PROFILE_ID
+  const showContractToggle = selectedProfile.id === D365_6YR_PROFILE_ID
+  const effectiveContractMode =
+    selectedProfile.id === D365_10YR_PROFILE_ID ||
+    (selectedProfile.id === D365_6YR_PROFILE_ID && isContractMode)
 
   const effectiveParsedData = useMemo(
     () => applyOriginalCompanyOverride(parsedData, showOriginalCompanyToggle && useOriginalCompany),
@@ -82,6 +89,7 @@ export default function ResumeGenerator() {
     contactLocation: effectiveParsedData.contactLocation || 'Dallas, TX',
     jobTitle: effectiveParsedData.jobTitle || '',
     summary: effectiveParsedData.professionalSummary,
+    contractMode: effectiveContractMode,
     skills: effectiveParsedData.skills,
     experience: effectiveParsedData.workExperience,
     education: selectedProfile.education,
@@ -212,7 +220,8 @@ export default function ResumeGenerator() {
   const handleReset = () => {
     setRawJson('')
     setJobDescription('')
-    setUseOriginalCompany(false)
+    setUseOriginalCompany(true)
+    setIsContractMode(true)
     setParseError('')
     setJobDescriptionError('')
     setParsedData(null)
@@ -253,6 +262,26 @@ export default function ResumeGenerator() {
               parseError ? 'border-red-500' : hasParsedData ? 'border-emerald-500' : 'border-slate-700'
             }`}
           />
+
+          {showContractToggle && (
+            <div className="mt-4 flex items-start justify-between gap-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-4">
+              <div>
+                <p className="text-sm font-medium text-slate-200">Contract</p>
+                <p className="mt-1 text-xs leading-5 text-slate-500">
+                  When enabled, the professional summary renders as a full-page bulleted list (contract format). Turn off for a standard paragraph summary (fulltime format).
+                </p>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={isContractMode}
+                onClick={() => { setIsContractMode((prev) => !prev); setSaveStatus(null) }}
+                className={`relative mt-0.5 inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-950 ${isContractMode ? 'bg-emerald-500' : 'bg-slate-700'}`}
+              >
+                <span className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg transition-transform duration-200 ${isContractMode ? 'translate-x-5' : 'translate-x-0'}`} />
+              </button>
+            </div>
+          )}
 
           <div className="mt-4">
             <label className="mb-2 block text-sm font-medium text-slate-300">Hardcoded Resume Profile</label>
