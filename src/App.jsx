@@ -2,6 +2,7 @@ import { LogOut, ShieldCheck } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import LoginScreen from './components/LoginScreen'
 import ResumeGenerator from './components/ResumeGenerator'
+import Submissions from './components/Submissions'
 import Tracker from './components/Tracker'
 import { buildApiUnavailableMessage, readJsonResponse } from './utils/http'
 
@@ -107,26 +108,21 @@ export default function App() {
             </div>
 
             <nav className="flex gap-1 rounded-xl bg-slate-800 p-1">
-              <button
-                onClick={() => setTab('generate')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  tab === 'generate'
-                    ? 'bg-slate-700 text-indigo-400 shadow-sm'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                Generate
-              </button>
-              <button
-                onClick={() => setTab('tracker')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  tab === 'tracker'
-                    ? 'bg-slate-700 text-indigo-400 shadow-sm'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                Application Dashboard
-              </button>
+              {[
+                { id: 'generate',     label: 'Generate' },
+                { id: 'tracker',      label: 'Applications' },
+                { id: 'submissions',  label: 'Submissions' }
+              ].map(({ id, label }) => (
+                <button
+                  key={id}
+                  onClick={() => setTab(id)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    tab === id ? 'bg-slate-700 text-indigo-400 shadow-sm' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
             </nav>
 
             <button
@@ -141,8 +137,9 @@ export default function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        <div className={tab === 'generate' ? '' : 'hidden'}><ResumeGenerator /></div>
-        <div className={tab === 'tracker' ? '' : 'hidden'}><Tracker /></div>
+        <div className={tab === 'generate'    ? '' : 'hidden'}><ResumeGenerator /></div>
+        <div className={tab === 'tracker'     ? '' : 'hidden'}><Tracker /></div>
+        <div className={tab === 'submissions' ? '' : 'hidden'}><Submissions /></div>
       </main>
     </div>
   )

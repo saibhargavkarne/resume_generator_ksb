@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { AlertCircle, CheckCircle, ChevronDown, ChevronRight, Download, FileText, RotateCcw, Save } from 'lucide-react'
+import { AlertCircle, CheckCircle, ChevronDown, ChevronRight, Download, FileText, RotateCcw, Save, Send, X } from 'lucide-react'
 import { DEFAULT_PROFILE_ID, getProfileById, RESUME_PROFILES } from '../data/profiles'
 import { getAddressForCity } from '../data/stateAddresses'
 
@@ -49,6 +49,18 @@ export default function ResumeGenerator() {
   const [showPreview, setShowPreview] = useState(true)
   const [saveStatus, setSaveStatus] = useState(null)
   const [downloadError, setDownloadError] = useState('')
+  const [showVendorModal, setShowVendorModal] = useState(false)
+  const [vendorSubmitting, setVendorSubmitting] = useState(false)
+  const [vendorSuccess, setVendorSuccess] = useState(false)
+  const [vendorForm, setVendorForm] = useState({
+    submissionDate: new Date().toISOString().split('T')[0],
+    vendorCompany: '',
+    rtrAmount: '',
+    pocName: '',
+    pocEmail: '',
+    clientName: '',
+    status: 'Waiting for Response'
+  })
 
   const selectedProfile = getProfileById(selectedProfileId)
   const showOriginalCompanyToggle = selectedProfile.id === ORIGINAL_COMPANY_PROFILE_ID
@@ -217,6 +229,36 @@ export default function ResumeGenerator() {
     }
   }
 
+  const handleVendorSubmit = async (e) => {
+    e.preventDefault()
+    setVendorSubmitting(true)
+    setVendorSuccess(false)
+    try {
+      await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...vendorForm,
+          fileName: effectiveParsedData?.resumeMeta?.fileName || '',
+          profileId: selectedProfile.id,
+          resumeJson: hasParsedData ? buildStoredResumeJson() : null,
+          jobDescription: jobDescription || ''
+        })
+      })
+      setVendorSuccess(true)
+      setVendorForm({
+        submissionDate: new Date().toISOString().split('T')[0],
+        vendorCompany: '',
+        rtrAmount: '',
+        pocName: '',
+        pocEmail: '',
+        clientName: '',
+        status: 'Waiting for Response'
+      })
+    } catch { /* noop */ }
+    setVendorSubmitting(false)
+  }
+
   const handleReset = () => {
     setRawJson('')
     setJobDescription('')
@@ -236,7 +278,70 @@ export default function ResumeGenerator() {
     ? parseFileName(effectiveParsedData.resumeMeta.fileName)
     : { company: '', role: '' }
 
+  const VENDOR_STATUS_OPTIONS = ['Waiting for Response', 'Not Moving Forward', 'Interview', 'Not Chosen', 'Offer']
+  const vf = (field) => (e) => setVendorForm((prev) => ({ ...prev, [field]: e.target.value }))
+  const inputCls = 'w-full rounded-xl border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-600 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  const labelCls = 'mb-1 block text-xs font-medium text-slate-400'
+
   return (
+    <>
+    {showVendorModal && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
+        <div className="w-full max-w-lg overflow-hidden rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl">
+          <div className="flex items-center justify-between border-b border-slate-700 px-6 py-4">
+            <h3 className="text-base font-semibold text-white">Log Vendor Submission</h3>
+            <button onClick={() => { setShowVendorModal(false); setVendorSuccess(false) }}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+          <form onSubmit={handleVendorSubmit} className="space-y-4 px-6 py-5">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className={labelCls}>Submission Date *</label>
+                <input type="date" required value={vendorForm.submissionDate} onChange={vf('submissionDate')} className={inputCls} />
+              </div>
+              <div>
+                <label className={labelCls}>RTR Amount *</label>
+                <input type="text" required placeholder="e.g. $55/hr C2C" value={vendorForm.rtrAmount} onChange={vf('rtrAmount')} className={inputCls} />
+              </div>
+            </div>
+            <div>
+              <label className={labelCls}>Vendor Company *</label>
+              <input type="text" required placeholder="Vendor company name" value={vendorForm.vendorCompany} onChange={vf('vendorCompany')} className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>Client Name *</label>
+              <input type="text" required placeholder="End client name" value={vendorForm.clientName} onChange={vf('clientName')} className={inputCls} />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className={labelCls}>POC Name *</label>
+                <input type="text" required placeholder="Point of contact" value={vendorForm.pocName} onChange={vf('pocName')} className={inputCls} />
+              </div>
+              <div>
+                <label className={labelCls}>POC Email *</label>
+                <input type="email" required placeholder="poc@vendor.com" value={vendorForm.pocEmail} onChange={vf('pocEmail')} className={inputCls} />
+              </div>
+            </div>
+            <div>
+              <label className={labelCls}>Status</label>
+              <select value={vendorForm.status} onChange={vf('status')} className={inputCls}>
+                {VENDOR_STATUS_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </div>
+            {vendorSuccess && (
+              <p className="text-sm text-emerald-400">Submission logged successfully!</p>
+            )}
+            <button type="submit" disabled={vendorSubmitting}
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-teal-700 py-3 text-sm font-semibold text-white transition hover:bg-teal-600 disabled:opacity-50">
+              <Send className="h-4 w-4" />
+              {vendorSubmitting ? 'Logging...' : 'Log Submission'}
+            </button>
+          </form>
+        </div>
+      </div>
+    )}
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
       <div className="space-y-6">
         <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 shadow-sm">
@@ -583,8 +688,17 @@ export default function ResumeGenerator() {
               </>
             )}
           </button>
+
+          <button
+            onClick={() => { setShowVendorModal(true); setVendorSuccess(false) }}
+            className="flex w-full items-center justify-center gap-2 rounded-2xl border border-teal-800/50 bg-teal-900/20 py-3 text-sm font-medium text-teal-400 transition hover:bg-teal-900/40"
+          >
+            <Send className="h-4 w-4" />
+            Log Vendor Submission
+          </button>
         </div>
       </div>
     </div>
+    </>
   )
 }
