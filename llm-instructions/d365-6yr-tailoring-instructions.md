@@ -121,8 +121,15 @@ The resume must read like someone who owns solutions end-to-end and delivers bus
 
 ✔ Use: Built, Developed, Designed, Configured, Automated, Deployed, Integrated, Implemented, Optimized, Streamlined, Engineered
 ❌ Never passive or junior-sounding language
+❌ Never use "Architected" as a verb — it implies solution/enterprise architect ownership. Use "Designed", "Built", or "Engineered" instead
 
-### 3. ROLE ACCURACY
+### 3. REAL + BELIEVABLE > KEYWORD STUFFING
+Every bullet must pass this test:
+> "Would a senior Power Platform developer believe this person did this?"
+
+If NOT → rewrite.
+
+### 4. ROLE ACCURACY
 - ❌ Never describe Saibhargav as a people manager — "led a team of N", "managed developers"
 - ✔ Technical leadership language is fine — "Led the development of...", "Owned ALM across..."
 - ❌ `jobTitle` must always be a Power Platform / D365 variant — never an unrelated role
@@ -189,6 +196,31 @@ Spread tools across all four roles based on the detected mode:
 - Secondary tools → 1–2 mentions
 - Niche/rare tools → at least 1 mention
 
+### STEP 5 — SKILLS TIMELINE VALIDATION (MANDATORY)
+
+Every tool mentioned in a bullet must have been available **and in mainstream use** during that role's date range.
+
+**Role date ranges:**
+- Kraft Heinz: Sep 2025 – Present
+- Microsoft: Jun 2023 – Sep 2025
+- Accenture: May 2021 – Aug 2022
+- Airen Technologies LLC: Dec 2019 – May 2021
+
+| Technology | Mainstream Since | Notes |
+|---|---|---|
+| Copilot Studio | 2023 | Never place in Accenture or Airen roles |
+| AI Builder (advanced) | 2021 | Use cautiously in Airen role |
+| Power Automate Desktop | 2021 | OK for Accenture role; not Airen |
+| Power Fx | 2021 | OK for Accenture role |
+| Power Pages (new name) | 2022 | Use "Power Apps Portals" for pre-2022 roles |
+| Dataverse (new name) | 2020 | Use "Common Data Service" only for pre-2020 context |
+| PCF Controls | 2019 | OK for Airen role onwards |
+| Azure DevOps | 2018 | OK for all roles |
+| Canvas Apps | 2016 | OK for all roles |
+| Power Automate Cloud flows | 2016 | OK for all roles |
+
+**Rule:** If a JD tool postdates a role, place it only in the more recent role(s). Never backdate.
+
 ---
 
 ## 🔥 EXPERIENCE REWRITING ENGINE
@@ -206,6 +238,12 @@ Every bullet must contain:
 
 ### BAD BULLET ❌
 > Built apps using Power Apps and Power Automate
+
+### MULTI-DIMENSIONAL RULE
+Each bullet must simultaneously satisfy:
+- **Hiring Manager** → sees end-to-end ownership of enterprise solutions and measurable delivery
+- **Technical Recruiter** → sees the exact tools and platforms from the JD
+- **ATS** → sees the exact JD keywords embedded naturally in context
 
 ---
 
@@ -276,11 +314,18 @@ When the JD asks for tools not explicitly named in the profile, map them:
 | Dataverse Security / Field-Level Permissions | Microsoft Contract Coverage + Airen Technologies — explicitly implemented |
 | Approval Workflows | Kraft Heinz PO Management — multi-level approval with conditional logic |
 
+✔ **Synthesis example** — JD requires Copilot Studio, profile has Power Automate + Canvas Apps:
+> Designed **Canvas App** workflows integrated with **Copilot Studio** to automate vendor approval routing, reducing manual review cycles by **60%** across the enterprise
+
+❌ Do NOT write: "Used Copilot Studio for automation"
+
 ---
 
 ## 🧠 SKILLS SECTION — ATS WEAPON
 
-Include **100% of JD tools**. JD tools listed **first** within each category.
+Include **100% of JD tools**. JD tools listed **first** within each category. Match JD wording exactly (if JD says "Microsoft Power Automate", write "Microsoft Power Automate").
+
+**Skills = ATS pass layer. Experience = human convincing layer.**
 
 ### MODE-SPECIFIC SKILL CATEGORY ORDERING
 
@@ -398,6 +443,68 @@ Any ❌ → regenerate that section before producing output.
 - ✔ If the JD is remote-only or does not specify a city, use `"Dallas, TX"` for `contactLocation`
 - ✔ Target ~3 pages equivalent (4–6 bullets per role)
 - ❌ `jobTitle` must always be a Power Platform or D365 variant
+- ❌ Never use "Architected" as a verb — use "Designed", "Built", or "Engineered"
+- ❌ Never write bullets implying people management — "led a team", "managed developers"
+
+---
+
+## 📍 CONTACT LOCATION RULE
+
+1. If the JD city matches a US state capital below → use the **full street address** as `contactLocation`
+2. Otherwise (non-capital city, remote, or unspecified) → use `"Dallas, TX"`
+
+| State Capital | Full Address |
+|---|---|
+| Montgomery, AL | 3182 Cloverdale Rd, Montgomery, AL 36106 |
+| Juneau, AK | 3304 Pioneer Ave, Juneau, AK 99801 |
+| Phoenix, AZ | 3007 W Rancho Dr, Phoenix, AZ 85017 |
+| Little Rock, AR | 4718 Kavanaugh Blvd, Little Rock, AR 72207 |
+| Sacramento, CA | 5201 H St, Sacramento, CA 95819 |
+| Denver, CO | 3407 Ash St, Denver, CO 80207 |
+| Hartford, CT | 52 Outlook Ave, Hartford, CT 06106 |
+| Dover, DE | 128 Pear Tree Run, Dover, DE 19904 |
+| Tallahassee, FL | 2611 Killearn Center Blvd, Tallahassee, FL 32309 |
+| Atlanta, GA | 617 Brookhaven Way NE, Atlanta, GA 30319 |
+| Honolulu, HI | 2748 Manoa Rd, Honolulu, HI 96822 |
+| Boise, ID | 3311 Meander Way, Boise, ID 83705 |
+| Springfield, IL | 1847 Chatham Rd, Springfield, IL 62704 |
+| Indianapolis, IN | 5312 Winthrop Ave, Indianapolis, IN 46220 |
+| Des Moines, IA | 4109 Ingersoll Ave, Des Moines, IA 50312 |
+| Topeka, KS | 2934 SW MacVicar Ave, Topeka, KS 66611 |
+| Frankfort, KY | 418 Westover Ave, Frankfort, KY 40601 |
+| Baton Rouge, LA | 3705 Kleinert Ave, Baton Rouge, LA 70806 |
+| Augusta, ME | 37 Cony St, Augusta, ME 04330 |
+| Annapolis, MD | 824 Sherwood Forest Dr, Annapolis, MD 21401 |
+| Boston, MA | 42 Pinckney St, Boston, MA 02114 |
+| Lansing, MI | 2508 Sheridan Rd, Lansing, MI 48910 |
+| St. Paul, MN | 1635 Fairmount Ave, St. Paul, MN 55105 |
+| Jackson, MS | 3214 Ridgewood Rd, Jackson, MS 39211 |
+| Jefferson City, MO | 512 Moreau Dr, Jefferson City, MO 65109 |
+| Helena, MT | 924 Benton Ave, Helena, MT 59601 |
+| Lincoln, NE | 5631 Vine St, Lincoln, NE 68505 |
+| Carson City, NV | 1408 Snyder Ave, Carson City, NV 89703 |
+| Concord, NH | 29 Rumford St, Concord, NH 03301 |
+| Trenton, NJ | 814 Stuyvesant Ave, Trenton, NJ 08618 |
+| Santa Fe, NM | 728 Acequia Madre, Santa Fe, NM 87505 |
+| Albany, NY | 214 Whitehall Rd, Albany, NY 12209 |
+| Raleigh, NC | 3609 Granville Dr, Raleigh, NC 27609 |
+| Bismarck, ND | 1724 Woodridge Dr, Bismarck, ND 58503 |
+| Columbus, OH | 2915 Bryden Rd, Columbus, OH 43209 |
+| Oklahoma City, OK | 3821 NW 58th Terr, Oklahoma City, OK 73112 |
+| Salem, OR | 4307 Kuebler Blvd S, Salem, OR 97302 |
+| Harrisburg, PA | 319 Hummel Ave, Harrisburg, PA 17104 |
+| Providence, RI | 47 Elmgrove Ave, Providence, RI 02906 |
+| Columbia, SC | 3118 Trenholm Rd, Columbia, SC 29204 |
+| Pierre, SD | 614 Poplar Ave, Pierre, SD 57501 |
+| Nashville, TN | 1427 Linden Ave, Nashville, TN 37212 |
+| Austin, TX | 2209 Enfield Rd, Austin, TX 78703 |
+| Salt Lake City, UT | 1743 Harvard Ave, Salt Lake City, UT 84105 |
+| Montpelier, VT | 23 Terrace St, Montpelier, VT 05602 |
+| Richmond, VA | 4307 Hanover Ave, Richmond, VA 23221 |
+| Olympia, WA | 2814 Eastside St NE, Olympia, WA 98506 |
+| Charleston, WV | 1132 Quarrier St, Charleston, WV 25301 |
+| Madison, WI | 3027 Nakoma Rd, Madison, WI 53711 |
+| Cheyenne, WY | 918 E 16th St, Cheyenne, WY 82001 |
 
 ---
 
@@ -446,11 +553,16 @@ Return ONLY this JSON — no explanation, no preamble:
       "dates": "Dec 2019 - May 2021",
       "achievements": ["bullet 1", "bullet 2", "..."]
     }
+  ],
+  "coverLetter": [
+    "Opening paragraph — direct hook, company name bolded, exact job title bolded...",
+    "Experience paragraph — 2-3 relevant achievements with real metrics...",
+    "Value paragraph — cross-functional delivery and platform ownership fit...",
+    "Closing paragraph — readiness to discuss, professional sign-off..."
   ]
 }
 ```
 
-**`contactLocation`**: Use the JD's city if specified, otherwise `"Dallas, TX"`.
+**`contactLocation`**: Full street address from capital table if JD city matches; otherwise `"Dallas, TX"`.
 **`fileName`**: PascalCase — e.g., `Karne_Saibhargav_Walmart_PowerPlatformDeveloper`
 **All `company`, `position`, `location`, `dates` values are hardcoded above — copy them exactly.**
-**`coverLetter`**: 4-element array of paragraph strings — always include, never omit.
