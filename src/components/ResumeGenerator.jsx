@@ -8,6 +8,43 @@ const ORIGINAL_COMPANY_PROFILE_ID = 'data-engineer-4yr'
 const D365_6YR_PROFILE_ID = 'd365-power-platform-6yr'
 const D365_10YR_PROFILE_ID = 'd365-power-platform-10yr'
 
+const D365_HARDCODED_EXPERIENCE = {
+  [D365_6YR_PROFILE_ID]: [
+    { company: 'Kraft Heinz',          position: 'Lead Power Platform Developer',                     location: 'Chicago, IL',     dates: 'Sep 2025 - Present'    },
+    { company: 'Microsoft',            position: 'Dynamics 365 CRM & Power Platform Developer',       location: 'Seattle, WA',     dates: 'Jun 2023 - Sep 2025'   },
+    { company: 'Accenture',            position: 'Dynamics CRM / Power Apps Developer',               location: 'Hyderabad, India', dates: 'May 2021 - Aug 2022'  },
+    { company: 'Airen Technologies LLC', position: 'Power Apps / Dynamics CRM Developer',             location: 'Hyderabad, India', dates: 'Dec 2019 - May 2021'  }
+  ],
+  [D365_10YR_PROFILE_ID]: [
+    { company: 'Microsoft',                  position: 'Senior Dynamics 365 CE & Power Platform Engineer', location: 'Seattle, WA',  dates: 'Aug 2022 - Present'    },
+    { company: 'C&S Wholesale Grocers Inc.', position: 'Dynamics 365 CE & Power Platform Consultant',      location: 'Keene, NH',    dates: 'Apr 2021 - Jul 2022'   },
+    { company: 'Sun Powered Productions',    position: 'Dynamics 365 CRM & Power Platform Developer',      location: 'Richmond, CA', dates: 'Dec 2018 - Mar 2021'   },
+    { company: 'Deloitte',                   position: 'MS Dynamics CRM Developer',                        location: 'Hyderabad, India', dates: 'Sep 2016 - Nov 2018' }
+  ]
+}
+
+function toPascalCase(str) {
+  return (str || '').replace(/[^a-zA-Z0-9\s]/g, '').split(/\s+/).filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join('')
+}
+
+function constructFileName(parsed) {
+  const company = parsed.workExperience?.[0]?.company || ''
+  const title = parsed.jobTitle || ''
+  return `Karne_Saibhargav_${toPascalCase(company)}_${toPascalCase(title)}`
+}
+
+function applyProfileDefaults(parsed, profileId) {
+  const defaults = D365_HARDCODED_EXPERIENCE[profileId]
+  if (!defaults || !Array.isArray(parsed.workExperience)) return parsed
+  return {
+    ...parsed,
+    workExperience: parsed.workExperience.map((exp, i) =>
+      i < defaults.length ? { ...exp, ...defaults[i] } : exp
+    )
+  }
+}
+
 function camelToSpaces(str) {
   return str.replace(/([A-Z])/g, ' $1').trim()
 }
@@ -130,7 +167,6 @@ export default function ResumeGenerator() {
       if (!parsed.professionalSummary) missing.push('professionalSummary')
       if (!parsed.skills) missing.push('skills')
       if (!parsed.workExperience) missing.push('workExperience')
-      if (!parsed.resumeMeta?.fileName) missing.push('resumeMeta.fileName')
 
       if (missing.length > 0) {
         setParseError(`Missing required fields: ${missing.join(', ')}`)
@@ -147,7 +183,9 @@ export default function ResumeGenerator() {
         return
       }
 
-      setParsedData(parsed)
+      let corrected = applyProfileDefaults(parsed, selectedProfileId)
+      corrected = { ...corrected, resumeMeta: { fileName: constructFileName(corrected) } }
+      setParsedData(corrected)
     } catch (err) {
       setParseError(`Invalid JSON: ${err.message}`)
     }
@@ -296,9 +334,8 @@ export default function ResumeGenerator() {
   const fileName = effectiveParsedData?.resumeMeta?.fileName || 'Resume details will appear here after parsing.'
   const rawLocation = effectiveParsedData?.contactLocation || 'Dallas, TX'
   const location = getAddressForCity(rawLocation) || rawLocation
-  const { company, role } = hasParsedData
-    ? parseFileName(effectiveParsedData.resumeMeta.fileName)
-    : { company: '', role: '' }
+  const company = hasParsedData ? (effectiveParsedData.workExperience?.[0]?.company || '') : ''
+  const role    = hasParsedData ? (effectiveParsedData.jobTitle || '') : ''
 
   const VENDOR_STATUS_OPTIONS = ['Waiting for Response', 'Not Moving Forward', 'Interview', 'Not Chosen', 'Offer']
   const vf = (field) => (e) => setVendorForm((prev) => ({ ...prev, [field]: e.target.value }))

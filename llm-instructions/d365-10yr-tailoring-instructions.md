@@ -469,61 +469,9 @@ Any ❌ → regenerate that section before producing output.
 
 ## 📍 CONTACT LOCATION RULE
 
-1. If the JD city matches a US state capital below → use the **full street address** as `contactLocation`
-2. Otherwise (non-capital city, remote, or unspecified) → use `"Dallas, TX"`
-
-| State Capital | Full Address |
-|---|---|
-| Montgomery, AL | 3182 Cloverdale Rd, Montgomery, AL 36106 |
-| Juneau, AK | 3304 Pioneer Ave, Juneau, AK 99801 |
-| Phoenix, AZ | 3007 W Rancho Dr, Phoenix, AZ 85017 |
-| Little Rock, AR | 4718 Kavanaugh Blvd, Little Rock, AR 72207 |
-| Sacramento, CA | 5201 H St, Sacramento, CA 95819 |
-| Denver, CO | 3407 Ash St, Denver, CO 80207 |
-| Hartford, CT | 52 Outlook Ave, Hartford, CT 06106 |
-| Dover, DE | 128 Pear Tree Run, Dover, DE 19904 |
-| Tallahassee, FL | 2611 Killearn Center Blvd, Tallahassee, FL 32309 |
-| Atlanta, GA | 617 Brookhaven Way NE, Atlanta, GA 30319 |
-| Honolulu, HI | 2748 Manoa Rd, Honolulu, HI 96822 |
-| Boise, ID | 3311 Meander Way, Boise, ID 83705 |
-| Springfield, IL | 1847 Chatham Rd, Springfield, IL 62704 |
-| Indianapolis, IN | 5312 Winthrop Ave, Indianapolis, IN 46220 |
-| Des Moines, IA | 4109 Ingersoll Ave, Des Moines, IA 50312 |
-| Topeka, KS | 2934 SW MacVicar Ave, Topeka, KS 66611 |
-| Frankfort, KY | 418 Westover Ave, Frankfort, KY 40601 |
-| Baton Rouge, LA | 3705 Kleinert Ave, Baton Rouge, LA 70806 |
-| Augusta, ME | 37 Cony St, Augusta, ME 04330 |
-| Annapolis, MD | 824 Sherwood Forest Dr, Annapolis, MD 21401 |
-| Boston, MA | 42 Pinckney St, Boston, MA 02114 |
-| Lansing, MI | 2508 Sheridan Rd, Lansing, MI 48910 |
-| St. Paul, MN | 1635 Fairmount Ave, St. Paul, MN 55105 |
-| Jackson, MS | 3214 Ridgewood Rd, Jackson, MS 39211 |
-| Jefferson City, MO | 512 Moreau Dr, Jefferson City, MO 65109 |
-| Helena, MT | 924 Benton Ave, Helena, MT 59601 |
-| Lincoln, NE | 5631 Vine St, Lincoln, NE 68505 |
-| Carson City, NV | 1408 Snyder Ave, Carson City, NV 89703 |
-| Concord, NH | 29 Rumford St, Concord, NH 03301 |
-| Trenton, NJ | 814 Stuyvesant Ave, Trenton, NJ 08618 |
-| Santa Fe, NM | 728 Acequia Madre, Santa Fe, NM 87505 |
-| Albany, NY | 214 Whitehall Rd, Albany, NY 12209 |
-| Raleigh, NC | 3609 Granville Dr, Raleigh, NC 27609 |
-| Bismarck, ND | 1724 Woodridge Dr, Bismarck, ND 58503 |
-| Columbus, OH | 2915 Bryden Rd, Columbus, OH 43209 |
-| Oklahoma City, OK | 3821 NW 58th Terr, Oklahoma City, OK 73112 |
-| Salem, OR | 4307 Kuebler Blvd S, Salem, OR 97302 |
-| Harrisburg, PA | 319 Hummel Ave, Harrisburg, PA 17104 |
-| Providence, RI | 47 Elmgrove Ave, Providence, RI 02906 |
-| Columbia, SC | 3118 Trenholm Rd, Columbia, SC 29204 |
-| Pierre, SD | 614 Poplar Ave, Pierre, SD 57501 |
-| Nashville, TN | 1427 Linden Ave, Nashville, TN 37212 |
-| Austin, TX | 2209 Enfield Rd, Austin, TX 78703 |
-| Salt Lake City, UT | 1743 Harvard Ave, Salt Lake City, UT 84105 |
-| Montpelier, VT | 23 Terrace St, Montpelier, VT 05602 |
-| Richmond, VA | 4307 Hanover Ave, Richmond, VA 23221 |
-| Olympia, WA | 2814 Eastside St NE, Olympia, WA 98506 |
-| Charleston, WV | 1132 Quarrier St, Charleston, WV 25301 |
-| Madison, WI | 3027 Nakoma Rd, Madison, WI 53711 |
-| Cheyenne, WY | 918 E 16th St, Cheyenne, WY 82001 |
+Output `contactLocation` as the city from the JD (e.g., `"Atlanta, GA"` or `"Seattle, WA"`).
+If the JD is remote-only or does not specify a city, output `"Dallas, TX"`.
+**Do not include full street addresses** — the website resolves city names to addresses automatically.
 
 ---
 
@@ -586,6 +534,6 @@ Return ONLY this JSON — no explanation, no preamble:
 }
 ```
 
-**`contactLocation`**: Full street address from capital table if JD city matches; otherwise `"Dallas, TX"`.
-**`fileName`**: PascalCase — e.g., `Karne_Saibhargav_Allstate_SeniorD365Developer`
-**All `company`, `position`, `location`, `dates` values are hardcoded above — copy them exactly.**
+**`contactLocation`**: JD city (e.g., `"Seattle, WA"`) or `"Dallas, TX"` — website resolves to full address.
+**`resumeMeta.fileName`**: Any string — the website constructs the final filename automatically.
+**`company`, `position`, `location`, `dates`**: The website enforces these from hardcoded values — focus on writing accurate `achievements` bullets.
