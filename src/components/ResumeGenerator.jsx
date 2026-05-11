@@ -579,7 +579,7 @@ export default function ResumeGenerator() {
                 <p className="mb-1 text-xs font-bold uppercase text-slate-500">Summary</p>
                 <p className="leading-relaxed text-slate-300">
                   {hasParsedData
-                    ? `${effectiveParsedData.professionalSummary.replace(/\*\*/g, '').slice(0, 220)}${effectiveParsedData.professionalSummary.length > 220 ? '...' : ''}`
+                    ? (() => { const s = Array.isArray(effectiveParsedData.professionalSummary) ? effectiveParsedData.professionalSummary.join(' ') : effectiveParsedData.professionalSummary; const clean = s.replace(/\*\*/g, ''); return `${clean.slice(0, 220)}${clean.length > 220 ? '...' : ''}` })()
                     : 'The parsed professional summary preview will appear here.'}
                 </p>
               </div>
