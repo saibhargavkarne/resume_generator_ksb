@@ -136,7 +136,7 @@ export default function ResumeGenerator() {
 
   const buildResumeData = () => ({
     personalInfo: selectedProfile.personalInfo,
-    contactLocation: effectiveParsedData.contactLocation || 'Dallas, TX',
+    contactLocation: location,
     jobTitle: effectiveParsedData.jobTitle || '',
     summary: effectiveParsedData.professionalSummary,
     contractMode: effectiveContractMode,
@@ -333,7 +333,10 @@ export default function ResumeGenerator() {
 
   const fileName = effectiveParsedData?.resumeMeta?.fileName || 'Resume details will appear here after parsing.'
   const rawLocation = effectiveParsedData?.contactLocation || 'Dallas, TX'
-  const location = getAddressForCity(rawLocation) || rawLocation
+  // Toggle ON → keep 'Dallas, TX' literally (don't resolve TX state → Austin address)
+  // Toggle OFF → resolve any state/city to full address
+  const isToggleOverride = showOriginalCompanyToggle && useOriginalCompany
+  const location = isToggleOverride ? 'Dallas, TX' : (getAddressForCity(rawLocation) || rawLocation)
   const company = hasParsedData ? (effectiveParsedData.workExperience?.[0]?.company || '') : ''
   const role    = hasParsedData ? (effectiveParsedData.jobTitle || '') : ''
 
