@@ -77,6 +77,7 @@ export default function ResumeGenerator() {
   const [showVendorModal, setShowVendorModal] = useState(false)
   const [vendorSubmitting, setVendorSubmitting] = useState(false)
   const [vendorSuccess, setVendorSuccess] = useState(false)
+  const [vendorError, setVendorError] = useState('')
   const [vendorForm, setVendorForm] = useState({
     submissionDate: new Date().toISOString().split('T')[0],
     vendorCompany: '',
@@ -282,6 +283,7 @@ export default function ResumeGenerator() {
     e.preventDefault()
     setVendorSubmitting(true)
     setVendorSuccess(false)
+    setVendorError('')
     try {
       const res = await fetch('/api/submissions', {
         method: 'POST',
@@ -308,7 +310,7 @@ export default function ResumeGenerator() {
         phone: ''
       })
     } catch {
-      setVendorSuccess(false)
+      setVendorError('Failed to log submission. Please try again.')
     }
     setVendorSubmitting(false)
   }
@@ -347,7 +349,7 @@ export default function ResumeGenerator() {
         <div className="w-full max-w-lg overflow-hidden rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl">
           <div className="flex items-center justify-between border-b border-slate-700 px-6 py-4">
             <h3 className="text-base font-semibold text-white">Log Vendor Submission</h3>
-            <button onClick={() => { setShowVendorModal(false); setVendorSuccess(false) }}
+            <button onClick={() => { setShowVendorModal(false); setVendorSuccess(false); setVendorError('') }}
               className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition">
               <X className="h-4 w-4" />
             </button>
@@ -403,6 +405,9 @@ export default function ResumeGenerator() {
             </div>
             {vendorSuccess && (
               <p className="text-sm text-emerald-400">Submission logged successfully!</p>
+            )}
+            {vendorError && (
+              <p className="text-sm text-red-400">{vendorError}</p>
             )}
             <button type="submit" disabled={vendorSubmitting}
               className="flex w-full items-center justify-center gap-2 rounded-2xl bg-teal-700 py-3 text-sm font-semibold text-white transition hover:bg-teal-600 disabled:opacity-50">

@@ -16,6 +16,7 @@ const BODY_SIZE = 22
 const SMALL_SIZE = 20
 const NAME_SIZE = 32
 const HEADING_SIZE = 20
+const ENTRY_HEADER_SIZE = 28
 const RIGHT_TAB = convertInchesToTwip(7.2)
 
 function parseFormattedText(text) {
@@ -74,7 +75,8 @@ function createSectionHeader(text) {
     spacing: {
       before: 180,
       after: 70
-    }
+    },
+    keepNext: true
   })
 }
 
@@ -285,30 +287,30 @@ const docxService = {
               new TextRun({
                 text: experience.position || '',
                 font: FONT,
-                size: BODY_SIZE,
+                size: ENTRY_HEADER_SIZE,
                 bold: true,
                 color: '000000'
               }),
               new TextRun({
                 text: experience.position && experience.company ? ', ' : '',
                 font: FONT,
-                size: BODY_SIZE,
+                size: ENTRY_HEADER_SIZE,
                 color: '000000'
               }),
               new TextRun({
                 text: experience.company || '',
                 font: FONT,
-                size: BODY_SIZE,
+                size: ENTRY_HEADER_SIZE,
                 bold: true,
                 color: '000000'
               }),
               ...(dateLocation
                 ? [
-                    new TextRun({ text: '\t', font: FONT, size: BODY_SIZE }),
+                    new TextRun({ text: '\t', font: FONT, size: ENTRY_HEADER_SIZE }),
                     new TextRun({
                       text: dateLocation,
                       font: FONT,
-                      size: BODY_SIZE,
+                      size: ENTRY_HEADER_SIZE,
                       bold: true,
                       color: '000000'
                     })
@@ -316,7 +318,8 @@ const docxService = {
                 : [])
             ],
             tabStops: [{ type: TabStopType.RIGHT, position: RIGHT_TAB }],
-            spacing: { before: 80, after: 40 }
+            spacing: { before: 80, after: 40 },
+            keepNext: true
           })
         )
 
@@ -520,7 +523,7 @@ const docxService = {
     }
 
     const drawSectionHeader = (text) => {
-      ensureSpace(26)
+      ensureSpace(80)
       cursorY += 10
       doc.setFont('times', 'bold')
       doc.setFontSize(10)
@@ -532,25 +535,29 @@ const docxService = {
     }
 
     const drawEntryHeader = (leftText, rightText) => {
-      const richLeft = buildRichLines(leftText || '', contentWidth - 150, 11)
+      const richLeft = buildRichLines(leftText || '', contentWidth - 150, 14)
+      doc.setFont('times', 'bold')
+      doc.setFontSize(14)
       const rightLines = doc.splitTextToSize(rightText || '', 140)
       const lineCount = Math.max(richLeft.length, rightLines.length)
-      ensureSpace(lineCount * 14 + 8)
+      ensureSpace(lineCount * 18 + 8)
 
       richLeft.forEach((line, li) => {
         let rx = marginLeft
         line.forEach(({ text: t, bold, width: tw }) => {
           doc.setFont('times', bold ? 'bold' : 'normal')
-          doc.setFontSize(11)
-          doc.text(t, rx, cursorY + li * 14)
+          doc.setFontSize(14)
+          doc.text(t, rx, cursorY + li * 18)
           rx += tw
         })
       })
 
       doc.setFont('times', 'bold')
-      doc.setFontSize(11)
-      doc.text(rightLines, rightColumnX, cursorY, { align: 'right' })
-      cursorY += lineCount * 14 + 4
+      doc.setFontSize(14)
+      rightLines.forEach((line, li) => {
+        doc.text(line, rightColumnX, cursorY + li * 18, { align: 'right' })
+      })
+      cursorY += lineCount * 18 + 4
     }
 
     const drawBullets = (items) => {

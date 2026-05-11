@@ -163,7 +163,8 @@ export default function Submissions() {
   const handleDelete = async (id) => {
     setDeletingId(id)
     try {
-      await fetch(`/api/submissions?id=${id}`, { method: 'DELETE' })
+      const res = await fetch(`/api/submissions?id=${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error('Delete failed')
       setSubmissions((prev) => prev.filter((s) => s.id !== id))
     } catch { /* noop */ }
     setDeletingId(null)
@@ -173,6 +174,7 @@ export default function Submissions() {
     setViewingJdId(sub.id)
     try {
       const res = await fetch(`/api/submissions?id=${sub.id}&fields=jd`)
+      if (!res.ok) throw new Error('Fetch failed')
       const data = await res.json()
       setJdModal({
         open: true,
@@ -301,7 +303,7 @@ export default function Submissions() {
           className="rounded-2xl border border-slate-700 bg-slate-800 px-4 py-2.5 text-sm text-slate-400 transition hover:text-white">
           Refresh
         </button>
-        <span className="text-sm text-slate-500">{filtered.length} of {submissions.length}</span>
+        <span className="text-sm text-slate-500">{filtered.length} of {profiledSubmissions.length}</span>
       </div>
 
       {/* Table */}
