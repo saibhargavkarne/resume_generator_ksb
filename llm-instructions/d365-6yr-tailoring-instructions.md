@@ -445,9 +445,7 @@ Any ❌ → regenerate that section before producing output.
 
 ## 📍 CONTACT LOCATION RULE
 
-Output `contactLocation` as the city from the JD (e.g., `"Austin, TX"` or `"Chicago, IL"`).
-If the JD is remote-only or does not specify a city, output `"Dallas, TX"`.
-**Do not include full street addresses** — the website resolves city names to addresses automatically.
+Output `contactLocation` as whatever the JD specifies — a state name (e.g., `"Texas"`), a city+state (e.g., `"Dallas, TX"`), or just the state abbreviation (e.g., `"TX"`). If remote or unspecified, output `"Dallas, TX"`. The website maps any US state reference to the correct address for that state automatically — do not include full street addresses in the JSON.
 
 ---
 
