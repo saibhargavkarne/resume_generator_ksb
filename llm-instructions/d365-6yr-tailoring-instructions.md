@@ -359,7 +359,7 @@ Include **100% of JD tools**. JD tools listed **first** within each category. Ma
 `professionalSummary` is an **array of bullet strings**, not a paragraph. It must fill a full page when rendered — write **10–14 bullets**.
 
 ### BULLET RULES
-- Each bullet starts with a **bold category label**: `"**Canvas Apps & UX Architecture:** ..."`
+- Each bullet opens directly with a **strong action verb** — no bold category label or heading prefix
 - Each bullet satisfies a JD requirement AND expands into adjacent depth — never just the keyword
 - If JD mentions "Power Automate" → bullet covers Cloud flows, Desktop flows, approval routing, connectors, error handling, SLA alerting
 - If JD mentions "Canvas Apps" → bullet covers delegation, preloaded collections, performance tuning, component libraries, offline mode patterns
@@ -515,9 +515,9 @@ Return ONLY this JSON — no explanation, no preamble:
   "contactLocation": "Dallas, TX",
   "jobTitle": "Exact Power Platform / D365 Job Title from JD",
   "professionalSummary": [
-    "**Category Label:** Detailed bullet covering JD requirement + adjacent depth with **metrics**...",
-    "**Category Label:** Another bullet...",
-    "...10–14 total bullets..."
+    "Developed / Built / Designed... [JD requirement + adjacent depth + **metrics**]...",
+    "Implemented / Engineered... [another bullet]...",
+    "...10–14 total bullets, each opening with a strong action verb, no category prefix..."
   ],
   "skills": {
     "Power Platform": ["Canvas Apps", "Power Automate", "..."],

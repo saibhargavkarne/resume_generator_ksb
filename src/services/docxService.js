@@ -299,7 +299,7 @@ const docxService = {
                 text: experience.company || '',
                 font: FONT,
                 size: BODY_SIZE,
-                italics: true,
+                bold: true,
                 color: '000000'
               }),
               ...(dateLocation
@@ -308,7 +308,8 @@ const docxService = {
                     new TextRun({
                       text: dateLocation,
                       font: FONT,
-                      size: SMALL_SIZE,
+                      size: BODY_SIZE,
+                      bold: true,
                       color: '000000'
                     })
                   ]
@@ -531,14 +532,23 @@ const docxService = {
     }
 
     const drawEntryHeader = (leftText, rightText) => {
-      const leftLines = doc.splitTextToSize(leftText || '', contentWidth - 150)
+      const richLeft = buildRichLines(leftText || '', contentWidth - 150, 11)
       const rightLines = doc.splitTextToSize(rightText || '', 140)
-      const lineCount = Math.max(leftLines.length, rightLines.length)
+      const lineCount = Math.max(richLeft.length, rightLines.length)
       ensureSpace(lineCount * 14 + 8)
 
-      doc.setFont('times', 'normal')
+      richLeft.forEach((line, li) => {
+        let rx = marginLeft
+        line.forEach(({ text: t, bold, width: tw }) => {
+          doc.setFont('times', bold ? 'bold' : 'normal')
+          doc.setFontSize(11)
+          doc.text(t, rx, cursorY + li * 14)
+          rx += tw
+        })
+      })
+
+      doc.setFont('times', 'bold')
       doc.setFontSize(11)
-      doc.text(leftLines, marginLeft, cursorY)
       doc.text(rightLines, rightColumnX, cursorY, { align: 'right' })
       cursorY += lineCount * 14 + 4
     }
@@ -617,7 +627,7 @@ const docxService = {
     if (resumeData.experience?.length > 0) {
       drawSectionHeader('PROFESSIONAL EXPERIENCE')
       resumeData.experience.forEach((experience) => {
-        const leftText = `${experience.position || ''}${experience.position && experience.company ? ', ' : ''}${experience.company || ''}`
+        const leftText = `${experience.position || ''}${experience.position && experience.company ? ', ' : ''}${experience.company ? `**${experience.company}**` : ''}`
         const rightText = [experience.dates || experience.period || '', experience.location || ''].filter(Boolean).join(' | ')
         drawEntryHeader(leftText, rightText)
         drawBullets(experience.achievements || experience.bullets || experience.responsibilities || [])
@@ -631,7 +641,7 @@ const docxService = {
         const degreeLine = education.gpa ? `${degreeText} (GPA: ${education.gpa})` : degreeText
         drawWrappedText(degreeLine, { style: 'bold', after: 2 })
         const rightText = [education.year || education.dates || '', education.location || ''].filter(Boolean).join(' | ')
-        drawEntryHeader(education.school || '', rightText)
+        drawEntryHeader(education.school ? `**${education.school}**` : '', rightText)
       })
     }
 

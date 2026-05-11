@@ -378,7 +378,7 @@ Include **100% of JD tools**. JD tools listed **first** within each category. Ma
 `professionalSummary` is an **array of bullet strings**, not a paragraph. It must fill a full page when rendered — write **12–16 bullets**.
 
 ### BULLET RULES
-- Each bullet starts with a **bold category label**: `"**C# Plugin Development:** ..."`
+- Each bullet opens directly with a **strong action verb** — no bold category label or heading prefix
 - Each bullet satisfies a JD requirement AND expands into adjacent depth — never just the keyword
 - If JD mentions "plugins" → cover C# plugins, custom workflow activities, event handlers, synchronous/asynchronous execution, plugin profiling with XRMToolBox, performance tuning
 - If JD mentions "Dataverse" → cover entity schema, security roles, field-level permissions, BPF, calculated/rollup fields, query optimization (FetchXML/OData), 45% load time improvement
@@ -539,9 +539,9 @@ Return ONLY this JSON — no explanation, no preamble:
   "contactLocation": "Dallas, TX",
   "jobTitle": "Exact Senior D365 / CRM / Power Platform Title from JD",
   "professionalSummary": [
-    "**Category Label:** Detailed bullet covering JD requirement + adjacent depth with **metrics**...",
-    "**Category Label:** Another bullet...",
-    "...12–16 total bullets..."
+    "Engineered / Designed / Built... [JD requirement + adjacent depth + **metrics**]...",
+    "Implemented / Delivered... [another bullet]...",
+    "...12–16 total bullets, each opening with a strong action verb, no category prefix..."
   ],
   "skills": {
     "Dynamics 365 & Power Platform": ["Dynamics 365 CE", "Dataverse", "..."],
