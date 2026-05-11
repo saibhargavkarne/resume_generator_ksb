@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { BriefcaseIcon, ChevronDown, ClipboardCopy, Download, Eye, MapPin, RefreshCw, Search, Trash2, X } from 'lucide-react'
 import { DEFAULT_PROFILE_ID, RESUME_PROFILES, getProfileById } from '../data/profiles'
+import { getAddressForCity } from '../data/stateAddresses'
 
 function formatDate(iso) {
   if (!iso) return ''
@@ -138,7 +139,7 @@ export default function Tracker() {
 
       const resumeData = {
         personalInfo: selectedProfile.personalInfo,
-        contactLocation: parsed.contactLocation || 'Dallas, TX',
+        contactLocation: getAddressForCity(parsed.contactLocation) || parsed.contactLocation || 'Dallas, TX',
         jobTitle: parsed.jobTitle || '',
         summary: parsed.professionalSummary,
         contractMode: Array.isArray(parsed.professionalSummary),
@@ -172,7 +173,7 @@ export default function Tracker() {
 
       const resumeData = {
         personalInfo: selectedProfile.personalInfo,
-        contactLocation: parsed.contactLocation || 'Dallas, TX',
+        contactLocation: getAddressForCity(parsed.contactLocation) || parsed.contactLocation || 'Dallas, TX',
         jobTitle: parsed.jobTitle || '',
         summary: parsed.professionalSummary,
         contractMode: Array.isArray(parsed.professionalSummary),

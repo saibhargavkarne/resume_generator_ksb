@@ -45,19 +45,6 @@ function applyProfileDefaults(parsed, profileId) {
   }
 }
 
-function camelToSpaces(str) {
-  return str.replace(/([A-Z])/g, ' $1').trim()
-}
-
-function parseFileName(fileName) {
-  const parts = fileName.split('_')
-  if (parts.length < 3) return { company: fileName, role: '' }
-
-  return {
-    company: camelToSpaces(parts[2] || ''),
-    role: parts.slice(3).map(camelToSpaces).join(' ')
-  }
-}
 
 function applyOriginalCompanyOverride(data, enabled) {
   if (!data) return null
@@ -115,7 +102,11 @@ export default function ResumeGenerator() {
   const hasParsedData = Boolean(effectiveParsedData)
   const hasJobDescription = Boolean(jobDescription.trim())
   const canDownload = hasParsedData
-  const canDownloadCoverLetter = hasParsedData && Boolean(effectiveParsedData?.coverLetter)
+  const canDownloadCoverLetter = hasParsedData && (
+    Array.isArray(effectiveParsedData?.coverLetter)
+      ? effectiveParsedData.coverLetter.length > 0
+      : Boolean(effectiveParsedData?.coverLetter)
+  )
   const canSave = hasParsedData && hasJobDescription && saveStatus !== 'saving' && saveStatus !== 'saved'
 
   const loadDocxService = async () => {
@@ -127,7 +118,7 @@ export default function ResumeGenerator() {
     resumeMeta: {
       fileName: effectiveParsedData.resumeMeta.fileName
     },
-    contactLocation: effectiveParsedData.contactLocation || '',
+    contactLocation: location,
     jobTitle: effectiveParsedData.jobTitle || '',
     professionalSummary: effectiveParsedData.professionalSummary,
     skills: effectiveParsedData.skills,
@@ -242,8 +233,6 @@ export default function ResumeGenerator() {
 
     setJobDescriptionError('')
     setSaveStatus('saving')
-    const { company, role: roleFromFileName } = parseFileName(effectiveParsedData.resumeMeta.fileName)
-    const role = effectiveParsedData.jobTitle || roleFromFileName
 
     try {
       const res = await fetch('/api/tracker', {
@@ -255,7 +244,7 @@ export default function ResumeGenerator() {
           role,
           profileId: selectedProfile.id,
           profileLabel: selectedProfile.label,
-          contactLocation: effectiveParsedData.contactLocation || 'Dallas, TX',
+          contactLocation: location,
           resumeJson: buildStoredResumeJson(),
           jobDescription
         })
@@ -292,7 +281,7 @@ export default function ResumeGenerator() {
     setVendorSubmitting(true)
     setVendorSuccess(false)
     try {
-      await fetch('/api/submissions', {
+      const res = await fetch('/api/submissions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -300,10 +289,10 @@ export default function ResumeGenerator() {
           fileName: effectiveParsedData?.resumeMeta?.fileName || '',
           profileId: selectedProfile.id,
           resumeJson: hasParsedData ? buildStoredResumeJson() : null,
-          jobDescription: jobDescription || '',
-          phone: vendorForm.phone || ''
+          jobDescription: jobDescription || ''
         })
       })
+      if (!res.ok) throw new Error('API error')
       setVendorSuccess(true)
       window.dispatchEvent(new CustomEvent('submission-logged'))
       setVendorForm({
@@ -313,9 +302,12 @@ export default function ResumeGenerator() {
         pocName: '',
         pocEmail: '',
         clientName: '',
-        status: 'Waiting for Response'
+        status: 'Waiting for Response',
+        phone: ''
       })
-    } catch { /* noop */ }
+    } catch {
+      setVendorSuccess(false)
+    }
     setVendorSubmitting(false)
   }
 
@@ -471,6 +463,9 @@ export default function ResumeGenerator() {
               onChange={(event) => {
                 setSelectedProfileId(event.target.value)
                 setSaveStatus(null)
+                setParsedData(null)
+                setParseError('')
+                setDownloadError('')
               }}
               className="h-12 w-full rounded-2xl border border-slate-700 bg-slate-800 px-4 text-sm text-slate-100 outline-none transition focus:border-indigo-500"
             >

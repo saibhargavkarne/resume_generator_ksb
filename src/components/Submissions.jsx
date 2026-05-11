@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ClipboardCopy, Download, Eye, Search, Trash2, X } from 'lucide-react'
 import { DEFAULT_PROFILE_ID, getProfileById } from '../data/profiles'
+import { getAddressForCity } from '../data/stateAddresses'
 
 const PROFILE_FILTER_OPTIONS = [
   { id: 'total',                    label: 'Total (All)' },
@@ -143,16 +144,19 @@ export default function Submissions() {
     })
   }, [profiledSubmissions, searchTerm, statusFilter])
 
-  const handleStatusChange = async (id, newStatus) => {
+  const handleStatusChange = async (id, newStatus, prevStatus) => {
     setUpdatingId(id)
     setSubmissions((prev) => prev.map((s) => s.id === id ? { ...s, status: newStatus } : s))
     try {
-      await fetch(`/api/submissions?id=${id}`, {
+      const res = await fetch(`/api/submissions?id=${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
       })
-    } catch { /* optimistic stays */ }
+      if (!res.ok) throw new Error('PATCH failed')
+    } catch {
+      setSubmissions((prev) => prev.map((s) => s.id === id ? { ...s, status: prevStatus } : s))
+    }
     setUpdatingId(null)
   }
 
@@ -192,7 +196,7 @@ export default function Submissions() {
       const profile = getProfileById(full.profileId || DEFAULT_PROFILE_ID)
       const resumeData = {
         personalInfo: profile.personalInfo,
-        contactLocation: parsed.contactLocation || 'Dallas, TX',
+        contactLocation: getAddressForCity(parsed.contactLocation) || parsed.contactLocation || 'Dallas, TX',
         jobTitle: parsed.jobTitle || '',
         summary: parsed.professionalSummary,
         contractMode: Array.isArray(parsed.professionalSummary),
@@ -341,7 +345,7 @@ export default function Submissions() {
                       </span>
                       <select
                         value={sub.status || 'Waiting for Response'}
-                        onChange={(e) => handleStatusChange(sub.id, e.target.value)}
+                        onChange={(e) => handleStatusChange(sub.id, e.target.value, sub.status)}
                         disabled={updatingId === sub.id}
                         className="absolute inset-0 w-full cursor-pointer opacity-0 disabled:cursor-not-allowed"
                       >
