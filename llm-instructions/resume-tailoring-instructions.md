@@ -183,6 +183,10 @@ Every bullet must contain:
 ### BAD BULLET ❌
 > Worked on data pipelines using Spark
 
+### EM DASH RULE (MANDATORY)
+❌ Never use em dashes (—) to connect clauses in any bullet. They are a clear AI writing signal.
+✔ Instead use natural connective language: "achieving", "delivering", "reducing", "improving", "resulting in", "enabling", or restructure into a single flowing sentence.
+
 ### MULTI-DIMENSIONAL RULE
 Each bullet must simultaneously satisfy:
 - **Data Engineer** → sees pipelines, scale, orchestration

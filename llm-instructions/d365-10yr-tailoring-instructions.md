@@ -247,10 +247,14 @@ Every bullet must contain:
 5. **Measurable impact** (use fixed metrics only)
 
 ### GOLD STANDARD BULLET ✔
-> Architected scalable integrations between **Dynamics 365 CE** and external enterprise systems using **Azure Functions** and **Logic Apps**, processing **1M+ records monthly** with automated error handling and monitoring to maintain **95%+ SLA** adherence
+> Engineered scalable integrations between **Dynamics 365 CE** and external enterprise systems using **Azure Functions** and **Logic Apps**, processing **1M+ records monthly** with automated error handling and monitoring to maintain **95%+ SLA** adherence
 
 ### BAD BULLET ❌
 > Worked on D365 CE integrations using Azure
+
+### EM DASH RULE (MANDATORY)
+❌ Never use em dashes (—) to connect clauses in any bullet. They are a clear AI writing signal.
+✔ Instead use natural connective language: "achieving", "delivering", "reducing", "improving", "resulting in", "enabling", or restructure into a single flowing sentence.
 
 ### MULTI-DIMENSIONAL RULE
 Each bullet must simultaneously satisfy:

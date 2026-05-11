@@ -627,7 +627,9 @@ const docxService = {
     if (resumeData.experience?.length > 0) {
       drawSectionHeader('PROFESSIONAL EXPERIENCE')
       resumeData.experience.forEach((experience) => {
-        const leftText = `${experience.position || ''}${experience.position && experience.company ? ', ' : ''}${experience.company ? `**${experience.company}**` : ''}`
+        const pos = experience.position || ''
+        const comp = experience.company || ''
+        const leftText = `**${pos}${pos && comp ? ', ' : ''}${comp}**`
         const rightText = [experience.dates || experience.period || '', experience.location || ''].filter(Boolean).join(' | ')
         drawEntryHeader(leftText, rightText)
         drawBullets(experience.achievements || experience.bullets || experience.responsibilities || [])

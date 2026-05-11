@@ -67,6 +67,7 @@ export default function ResumeGenerator() {
   const [selectedProfileId, setSelectedProfileId] = useState(DEFAULT_PROFILE_ID)
   const [useOriginalCompany, setUseOriginalCompany] = useState(true)
   const [isContractMode, setIsContractMode] = useState(true)
+  const [useD365OriginalLocation, setUseD365OriginalLocation] = useState(true)
   const [parseError, setParseError] = useState('')
   const [jobDescriptionError, setJobDescriptionError] = useState('')
   const [parsedData, setParsedData] = useState(null)
@@ -90,6 +91,7 @@ export default function ResumeGenerator() {
   const selectedProfile = getProfileById(selectedProfileId)
   const showOriginalCompanyToggle = selectedProfile.id === ORIGINAL_COMPANY_PROFILE_ID
   const showContractToggle = selectedProfile.id === D365_6YR_PROFILE_ID
+  const showD365LocationToggle = selectedProfile.id === D365_6YR_PROFILE_ID || selectedProfile.id === D365_10YR_PROFILE_ID
   const effectiveContractMode =
     selectedProfile.id === D365_10YR_PROFILE_ID ||
     (selectedProfile.id === D365_6YR_PROFILE_ID && isContractMode)
@@ -316,6 +318,7 @@ export default function ResumeGenerator() {
     setJobDescription('')
     setUseOriginalCompany(true)
     setIsContractMode(true)
+    setUseD365OriginalLocation(true)
     setParseError('')
     setJobDescriptionError('')
     setParsedData(null)
@@ -327,7 +330,7 @@ export default function ResumeGenerator() {
   const rawLocation = effectiveParsedData?.contactLocation || 'Dallas, TX'
   // Toggle ON → keep 'Dallas, TX' literally (don't resolve TX state → Austin address)
   // Toggle OFF → resolve any state/city to full address
-  const isToggleOverride = showOriginalCompanyToggle && useOriginalCompany
+  const isToggleOverride = (showOriginalCompanyToggle && useOriginalCompany) || (showD365LocationToggle && useD365OriginalLocation)
   const location = isToggleOverride ? 'Dallas, TX' : (getAddressForCity(rawLocation) || rawLocation)
   const company = hasParsedData ? (effectiveParsedData.workExperience?.[0]?.company || '') : ''
   const role    = hasParsedData ? (effectiveParsedData.jobTitle || '') : ''
@@ -452,6 +455,26 @@ export default function ResumeGenerator() {
                 className={`relative mt-0.5 inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-950 ${isContractMode ? 'bg-emerald-500' : 'bg-slate-700'}`}
               >
                 <span className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg transition-transform duration-200 ${isContractMode ? 'translate-x-5' : 'translate-x-0'}`} />
+              </button>
+            </div>
+          )}
+
+          {showD365LocationToggle && (
+            <div className="mt-4 flex items-start justify-between gap-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-4">
+              <div>
+                <p className="text-sm font-medium text-slate-200">Use Dallas, TX as location</p>
+                <p className="mt-1 text-xs leading-5 text-slate-500">
+                  When enabled, resume uses <span className="font-medium text-slate-300">Dallas, TX</span> as the contact location. Turn off to use the address derived from the JD state.
+                </p>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={useD365OriginalLocation}
+                onClick={() => { setUseD365OriginalLocation((prev) => !prev); setSaveStatus(null) }}
+                className={`relative mt-0.5 inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-950 ${useD365OriginalLocation ? 'bg-emerald-500' : 'bg-slate-700'}`}
+              >
+                <span className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg transition-transform duration-200 ${useD365OriginalLocation ? 'translate-x-5' : 'translate-x-0'}`} />
               </button>
             </div>
           )}

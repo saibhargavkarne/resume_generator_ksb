@@ -234,10 +234,14 @@ Every bullet must contain:
 5. **Measurable impact** (use metrics from fixed list only)
 
 ### GOLD STANDARD BULLET ✔
-> Developed a **Power Apps Canvas** application for **17 Microsoft Experience Centers** serving **200+ active users**, automating end-to-end store workflows including shift management, sales monitoring, and issue escalation — reducing manual workload by **60%**
+> Developed a **Power Apps Canvas** application for **17 Microsoft Experience Centers** serving **200+ active users**, automating end-to-end store workflows including shift management, sales monitoring, and issue escalation, reducing manual workload by **60%**
 
 ### BAD BULLET ❌
 > Built apps using Power Apps and Power Automate
+
+### EM DASH RULE (MANDATORY)
+❌ Never use em dashes (—) to connect clauses in any bullet. They are a clear AI writing signal.
+✔ Instead use natural connective language: "achieving", "delivering", "reducing", "improving", "resulting in", "enabling", or restructure into a single flowing sentence.
 
 ### MULTI-DIMENSIONAL RULE
 Each bullet must simultaneously satisfy:
