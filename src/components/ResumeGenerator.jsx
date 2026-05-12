@@ -178,7 +178,8 @@ export default function ResumeGenerator() {
       }
 
       let corrected = applyProfileDefaults(parsed, selectedProfileId)
-      corrected = { ...corrected, resumeMeta: { fileName: constructFileName(corrected) } }
+      const fileName = corrected.resumeMeta?.fileName || constructFileName(corrected)
+      corrected = { ...corrected, resumeMeta: { ...corrected.resumeMeta, fileName } }
       setParsedData(corrected)
     } catch (err) {
       setParseError(`Invalid JSON: ${err.message}`)
