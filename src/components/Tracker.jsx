@@ -64,7 +64,7 @@ export default function Tracker() {
   const [activeFilter, setActiveFilter] = useState('all')
   const [searchInput, setSearchInput] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedProfileId, setSelectedProfileId] = useState('data-engineer-4yr')
+  const [selectedProfileId, setSelectedProfileId] = useState('d365-power-platform-6yr')
 
   const loadDocxService = useCallback(async () => {
     const module = await import('../services/docxService')
@@ -357,7 +357,7 @@ export default function Tracker() {
               onChange={(e) => setSelectedProfileId(e.target.value)}
               className="appearance-none cursor-pointer rounded-2xl border border-slate-700 bg-slate-800 py-2.5 pl-4 pr-10 text-sm font-medium text-slate-200 shadow-sm transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
             >
-              {RESUME_PROFILES.map((profile) => (
+              {RESUME_PROFILES.filter((p) => !p.hidden).map((profile) => (
                 <option key={profile.id} value={profile.id}>{profile.shortLabel}</option>
               ))}
             </select>

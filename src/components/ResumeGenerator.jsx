@@ -498,7 +498,7 @@ export default function ResumeGenerator() {
               }}
               className="h-12 w-full rounded-2xl border border-slate-700 bg-slate-800 px-4 text-sm text-slate-100 outline-none transition focus:border-indigo-500"
             >
-              {RESUME_PROFILES.map((profile) => (
+              {RESUME_PROFILES.filter((p) => !p.hidden).map((profile) => (
                 <option key={profile.id} value={profile.id}>
                   {profile.label}
                 </option>
