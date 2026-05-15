@@ -94,7 +94,7 @@ export const RESUME_PROFILES = [
       name: 'Saibhargav Karne',
       phone: '(469) 666-7274',
       email: 'saibhargav5088@gmail.com',
-      linkedin: 'https://www.linkedin.com/in/sbkarne/'
+      linkedin: 'https://www.linkedin.com/in/bhargav-k-217b222b3/'
     },
     education: [
       {
