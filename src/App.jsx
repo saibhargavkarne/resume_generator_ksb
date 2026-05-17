@@ -92,7 +92,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950">
       <header className="sticky top-0 z-10 border-b border-slate-800 bg-slate-900/90 shadow-sm backdrop-blur">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-screen-2xl mx-auto px-6 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-lg font-bold text-white">Resume Generator</h1>
             <p className="text-xs text-slate-400">JSON to DOCX / PDF</p>
@@ -136,7 +136,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className="max-w-screen-2xl mx-auto px-6 py-8">
         <div className={tab === 'generate'    ? '' : 'hidden'}><ResumeGenerator /></div>
         <div className={tab === 'tracker'     ? '' : 'hidden'}><Tracker /></div>
         <div className={tab === 'submissions' ? '' : 'hidden'}><Submissions /></div>
