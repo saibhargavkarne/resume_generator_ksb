@@ -48,7 +48,7 @@ const D365_CERTIFICATIONS = [
 export const RESUME_PROFILES = [
   {
     id: 'data-engineer-4yr',
-    hidden: true,
+    hidden: false,
     label: 'Data Engineer - 4 Years',
     shortLabel: 'Data Engineer 4yr',
     summary: 'Current data engineering profile for Python, SQL, AWS, Azure, Spark, and ETL-heavy roles.',
@@ -87,7 +87,7 @@ export const RESUME_PROFILES = [
   },
   {
     id: 'd365-power-platform-10yr',
-    hidden: true,
+    hidden: false,
     label: 'D365 & Power Platform - 10 Years',
     shortLabel: 'D365 Power Platform 10yr',
     summary: 'Senior Microsoft Dynamics 365 and Power Platform specialist with 9+ years across Dynamics 365 CE, Dataverse, Model-Driven Apps, Canvas Apps, Power Pages, Azure integrations, ALM, and enterprise CRM support.',
