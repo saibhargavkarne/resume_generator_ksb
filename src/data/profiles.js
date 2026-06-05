@@ -64,8 +64,9 @@ export const RESUME_PROFILES = [
   },
   {
     id: 'd365-power-platform-6yr',
-    label: 'Dynamics 365 & Power Platform Developer',
-    shortLabel: 'Dynamics 365 & Power Platform',
+    hidden: false,
+    label: 'Dynamics 365 & Power Platform - 6 Years',
+    shortLabel: 'Dynamics 365 Power Platform 6yr',
     summary: 'Power Platform Developer with 5+ years of experience and 2+ years focused on Power Automate, Canvas Apps, Dataverse, SAP integration, and enterprise workflow automation.',
     personalInfo: {
       name: 'Saibhargav Karne',
