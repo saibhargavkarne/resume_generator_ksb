@@ -6,6 +6,7 @@ import { getAddressForCity } from '../data/stateAddresses'
 const PROFILE_FILTER_OPTIONS = [
   { id: 'total',                    label: 'Total (All)' },
   { id: 'd365-power-platform-6yr',  label: 'D365 — 6 Year' },
+  { id: 'd365-power-platform-8yr',  label: 'D365 — 8 Year' },
   { id: 'd365-power-platform-10yr', label: 'D365 — 10 Year' }
 ]
 

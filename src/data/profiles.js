@@ -28,6 +28,17 @@ const D365_EDUCATION = [
   }
 ]
 
+const D365_8YR_EDUCATION = [
+  {
+    school: 'University of North Texas',
+    degree: 'Masters',
+    field: 'Information Systems and Technology',
+    year: 'Aug 2022 - Dec 2023',
+    location: 'Denton, TX',
+    gpa: '3.8'
+  }
+]
+
 const D365_CERTIFICATIONS = [
   {
     name: 'Microsoft Certified: Power Platform Fundamentals',
@@ -80,6 +91,30 @@ export const RESUME_PROFILES = [
       'Kraft Heinz - PO Management',
       'Microsoft - SLOP (Store Level Operational Processes)',
       'Microsoft - Contract Coverage',
+      'Accenture / Adidas - Retail Store Performance Tracker',
+      'Accenture / Adidas - D365 Marketing Application',
+      'Airen Technologies - Customer Onboarding Process'
+    ]
+  },
+  {
+    id: 'd365-power-platform-8yr',
+    hidden: false,
+    label: 'Dynamics 365 & Power Platform - 8 Years',
+    shortLabel: 'Dynamics 365 Power Platform 8yr',
+    summary: 'Power Platform & Dynamics 365 Developer with 8+ years of experience across Canvas Apps, Model-Driven Apps, Power Automate, Dataverse, C# plugins, SAP integration, and enterprise workflow automation.',
+    personalInfo: {
+      name: 'Saibhargav Karne',
+      phone: '(940) 368-1088',
+      email: 'saibhargavkarne08@gmail.com',
+      linkedin: 'https://www.linkedin.com/in/sbkarne/'
+    },
+    education: D365_8YR_EDUCATION,
+    certifications: D365_CERTIFICATIONS,
+    clientProjects: [
+      'Kraft Heinz - PO Management',
+      'Microsoft - SLOP (Store Level Operational Processes)',
+      'Microsoft - Contract Coverage',
+      'AARP - Member Benefits & Case Management Platform',
       'Accenture / Adidas - Retail Store Performance Tracker',
       'Accenture / Adidas - D365 Marketing Application',
       'Airen Technologies - Customer Onboarding Process'

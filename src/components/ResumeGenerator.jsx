@@ -6,6 +6,7 @@ import { getAddressForCity } from '../data/stateAddresses'
 const ORIGINAL_COMPANY_NAME = 'Kraft Heinz'
 const ORIGINAL_COMPANY_PROFILE_ID = 'data-engineer-4yr'
 const D365_6YR_PROFILE_ID = 'd365-power-platform-6yr'
+const D365_8YR_PROFILE_ID = 'd365-power-platform-8yr'
 const D365_10YR_PROFILE_ID = 'd365-power-platform-10yr'
 
 const D365_HARDCODED_EXPERIENCE = {
@@ -14,6 +15,13 @@ const D365_HARDCODED_EXPERIENCE = {
     { company: 'Microsoft',            position: 'Dynamics 365 CRM & Power Platform Developer',       location: 'Seattle, WA',     dates: 'Jun 2023 - Sep 2025'   },
     { company: 'Accenture',            position: 'Dynamics CRM / Power Apps Developer',               location: 'Hyderabad, India', dates: 'May 2021 - Aug 2022'  },
     { company: 'Airen Technologies LLC', position: 'Power Apps / Dynamics CRM Developer',             location: 'Hyderabad, India', dates: 'Dec 2019 - May 2021'  }
+  ],
+  [D365_8YR_PROFILE_ID]: [
+    { company: 'Kraft Heinz',          position: 'Lead Power Platform Developer',                     location: 'Chicago, IL',     dates: 'Sep 2025 - Present'    },
+    { company: 'Microsoft',            position: 'Dynamics 365 CRM & Power Platform Developer',       location: 'Seattle, WA',     dates: 'Jun 2023 - Sep 2025'   },
+    { company: 'AARP',                 position: 'Power Apps / Dynamics CRM Developer',               location: 'Dallas, TX',      dates: 'Sep 2022 - May 2023'   },
+    { company: 'Accenture',            position: 'Dynamics CRM / Power Apps Developer',               location: 'Hyderabad, India', dates: 'May 2021 - Aug 2022'  },
+    { company: 'Airen Technologies LLC', position: 'Power Apps / Dynamics CRM Developer',             location: 'Hyderabad, India', dates: 'Apr 2018 - May 2021'  }
   ],
   [D365_10YR_PROFILE_ID]: [
     { company: 'Microsoft',                  position: 'Senior Dynamics 365 CE & Power Platform Engineer', location: 'Seattle, WA',  dates: 'Aug 2022 - Present'    },
@@ -91,11 +99,11 @@ export default function ResumeGenerator() {
 
   const selectedProfile = getProfileById(selectedProfileId)
   const showOriginalCompanyToggle = selectedProfile.id === ORIGINAL_COMPANY_PROFILE_ID
-  const showContractToggle = selectedProfile.id === D365_6YR_PROFILE_ID
-  const showD365LocationToggle = selectedProfile.id === D365_6YR_PROFILE_ID || selectedProfile.id === D365_10YR_PROFILE_ID
+  const showContractToggle = selectedProfile.id === D365_6YR_PROFILE_ID || selectedProfile.id === D365_8YR_PROFILE_ID
+  const showD365LocationToggle = selectedProfile.id === D365_6YR_PROFILE_ID || selectedProfile.id === D365_8YR_PROFILE_ID || selectedProfile.id === D365_10YR_PROFILE_ID
   const effectiveContractMode =
     selectedProfile.id === D365_10YR_PROFILE_ID ||
-    (selectedProfile.id === D365_6YR_PROFILE_ID && isContractMode)
+    ((selectedProfile.id === D365_6YR_PROFILE_ID || selectedProfile.id === D365_8YR_PROFILE_ID) && isContractMode)
 
   const effectiveParsedData = useMemo(
     () => applyOriginalCompanyOverride(parsedData, showOriginalCompanyToggle && useOriginalCompany),
