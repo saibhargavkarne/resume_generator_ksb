@@ -104,9 +104,9 @@ export const RESUME_PROFILES = [
     summary: 'Power Platform & Dynamics 365 Developer with 8+ years of experience across Canvas Apps, Model-Driven Apps, Power Automate, Dataverse, C# plugins, SAP integration, and enterprise workflow automation.',
     personalInfo: {
       name: 'Saibhargav Karne',
-      phone: '(940) 368-1088',
-      email: 'saibhargavkarne08@gmail.com',
-      linkedin: 'https://www.linkedin.com/in/sbkarne/'
+      phone: '469-666-7274',
+      email: 'saibhargav5088@gmail.com',
+      linkedin: 'https://www.linkedin.com/in/bhargav-k-217b222b3/'
     },
     education: D365_8YR_EDUCATION,
     certifications: D365_CERTIFICATIONS,
